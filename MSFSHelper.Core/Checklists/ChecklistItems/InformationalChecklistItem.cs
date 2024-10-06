@@ -8,6 +8,17 @@
     /// </summary>
     public class InformationalChecklistItem : BaseChecklistItem
     {
+        /// <summary>
+        /// For serialization only
+        /// 
+        /// Not for code use.
+        /// </summary>
+        [Obsolete]
+        public InformationalChecklistItem()
+        {
+            State = ChecklistItemState.Uncheckable;
+        }
+
         public InformationalChecklistItem(string name, string action) 
             : base(name, action)
         {

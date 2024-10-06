@@ -11,4 +11,10 @@
     <PackageReference Include="FSUIPCWebSocketClientDLL" Version="1.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\Checklists\A32NX Checklists.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

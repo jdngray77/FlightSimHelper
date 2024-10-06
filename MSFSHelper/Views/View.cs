@@ -1,20 +1,11 @@
-﻿using Spectre.Console.Rendering;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MSFSHelper.Views
+﻿
+namespace MSFSHelper.NewViews
 {
-    internal abstract class View : IView
+    public abstract class View
     {
-        private View cachedView;
+        public virtual Task OnShown() { return Task.CompletedTask; }
+        public virtual Task OnNoLongerShown() { return Task.CompletedTask; }
 
-        public Renderable RenderableView 
-        {
-            get => BuildView();
-        }
-        protected abstract Renderable BuildView();
+        public abstract Task Render();
     }
 }

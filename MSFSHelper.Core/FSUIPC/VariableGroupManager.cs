@@ -4,6 +4,8 @@ namespace MSFSHelper.Core.FSUIPC
 {
     public class VariableGroupManager
     {
+        public static VariableGroupManager? PrimaryManager { get; private set; }
+
         public Dictionary<string, VariableGroup> VariableGroups = new Dictionary<string, VariableGroup>();
 
         private FSUIPC ws;
@@ -11,6 +13,11 @@ namespace MSFSHelper.Core.FSUIPC
         public VariableGroupManager(FSUIPC ws) 
         {
             this.ws = ws;
+           
+            if (PrimaryManager == null)
+            {
+                PrimaryManager = this;
+            }
         }
 
         public async Task<VariableGroup> DeclareVariableGroup(string name, params string[] variables)
@@ -22,11 +29,11 @@ namespace MSFSHelper.Core.FSUIPC
             return x;
         }
 
-        public async Task<VariableGroup> DeclareOffsetGroup(string name, params (int address, int size, string name, string type)[] variables)
+        public async Task<VariableGroup> DeclareOffsetGroup(string name, params OffsetVar[] variables)
         {
             await ws.DeclareOffsetGroup(name, variables).ConfigureAwait(false);
 
-            var x = new VariableGroup(name, true, variables.Select(it => it.name).ToArray());
+            var x = new VariableGroup(name, true, variables.Select(it => it.Name).ToArray());
             VariableGroups.Add(name, x);
             return x;
         }
@@ -58,6 +65,14 @@ namespace MSFSHelper.Core.FSUIPC
             return group;
         }
 
+        public async Task AutoUpdateGroupsStartingWith(string name)
+        {
+            foreach (var item in VariableGroups.Where(it => it.Key.StartsWith(name)))
+            {
+                await AutoUpdateVariableGroup(item.Value).ConfigureAwait(false);
+            }
+        }
+
         public async Task AutoUpdateAllGroups()
         {
             foreach (var item in VariableGroups)
@@ -65,7 +80,6 @@ namespace MSFSHelper.Core.FSUIPC
                 await AutoUpdateVariableGroup(item.Value).ConfigureAwait(false);
             }
         }
-
 
         public async Task<VariableGroup> AutoUpdateVariableGroup(string name, int intervalMillis)
         {
@@ -108,6 +122,14 @@ namespace MSFSHelper.Core.FSUIPC
             }
 
             return group;
+        }
+
+        public async Task StopUpdatingAllGroups()
+        {
+            foreach (var item in VariableGroups.Values.Where(it => it.IsAutoUpdating))
+            {
+                StopUpdatingVariableGroup(item);
+            }
         }
 
         public async Task<VariableGroup> StopUpdatingVariableGroup(string name)

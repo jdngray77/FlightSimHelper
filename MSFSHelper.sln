@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSFSHelper", "MSFSHelper\MSFSHelper.csproj", "{1BAD665F-5103-4C86-AEE0-EC802AE771CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSFSHelper", "MSFSHelper\MSFSHelper.csproj", "{1BAD665F-5103-4C86-AEE0-EC802AE771CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSFSHelper.Core", "MSFSHelper.Core\MSFSHelper.Core.csproj", "{21526FA2-CBC1-4210-8F38-06142F221B44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSFSHelper.Core", "MSFSHelper.Core\MSFSHelper.Core.csproj", "{21526FA2-CBC1-4210-8F38-06142F221B44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

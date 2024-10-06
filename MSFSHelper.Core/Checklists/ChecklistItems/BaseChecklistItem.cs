@@ -1,15 +1,22 @@
-﻿namespace MSFSHelper.Core.Checklists.ChecklistItems
+﻿using System.Xml.Serialization;
+
+namespace MSFSHelper.Core.Checklists.ChecklistItems
 {
-    public abstract class BaseChecklistItem : IChecklistItem, IDisposable
+    [Serializable]
+    public abstract class BaseChecklistItem : ChecklistEntry, IDisposable
     {
         #region User representation
-        public string Name { get; init; }
 
-        public string Action { get; init; }
+        [XmlAttribute]
+        public override string Name { get; init; }
+
+        [XmlAttribute]
+        public override string Action { get; init; }
 
         #endregion User representation
 
-        public ChecklistItemState State { get; protected set; } = ChecklistItemState.Unchecked;
+        [XmlIgnore]
+        public override ChecklistItemState State { get; protected set; } = ChecklistItemState.Unchecked;
 
         protected bool TrySetState(bool checkedState)
         {
@@ -26,6 +33,13 @@
             State = state;
             return true;
         }
+
+        /// <summary>
+        /// Not intended for code use; use full constructor.
+        /// For serialization.
+        /// </summary>
+        [Obsolete]
+        public BaseChecklistItem() { }
 
         protected BaseChecklistItem(string name, string action)
         {

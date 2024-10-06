@@ -1,0 +1,55 @@
+﻿<ChecklistGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Checklists>
+		<Checklist Name="PRELIMINARY COCKPIT PREP">
+			<Items>
+				<StateMonitorChecklistItem Name="ENG MASTER 1" Action="OFF" VariableName="FUELSYSTEM VALVE SWITCH:1" DataOffset="0x66CB" RequiredValue="0"/>
+				<StateMonitorChecklistItem Name="ENG MASTER 2" Action="OFF" VariableName="FUELSYSTEM VALVE SWITCH:2" DataOffset="0x66CC" RequiredValue="0"/>
+				<StateMonitorChecklistItem Name="ENG MODE SEL" Action="NORM" VariableName="TURB ENG IGNITION SWITCH EX1:1" DataOffset="0x66CA" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="L/G LVR" Action="DOWN" VariableName="GEAR HANDLE POSITION" RequiredValue="0"/>
+				<StateMonitorChecklistItem Name="WIPERS L" Action="OFF" VariableName="CIRCUIT SWITCH ON:77" DataOffset="0x66D2" RequiredValue="0"/>
+				<StateMonitorChecklistItem Name="WIPERS R" Action="OFF" VariableName="CIRCUIT SWITCH ON:80" DataOffset="0x66D4" RequiredValue="0"/>
+				<StateMonitorChecklistItem Name="Battery 1" Action="SET AUTO" VariableName="A32NX_OVHD_ELEC_BAT_1_PB_IS_AUTO" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="Battery 2" Action="SET AUTO" VariableName="A32NX_OVHD_ELEC_BAT_2_PB_IS_AUTO" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="APU FIRE TEST" Action="PERFORM" VariableName="A32NX_FIRE_TEST_APU" Latching="true" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="APU" Action="START" VariableName="A32NX_OVHD_APU_START_PB_IS_AVAILABLE" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="PACK 1" Action="ON" VariableName="A32NX_OVHD_COND_PACK_1_PB_IS_ON" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="PACK 2" Action="ON" VariableName="A32NX_OVHD_COND_PACK_2_PB_IS_ON" RequiredValue="1"/>
+				<InformationalChecklistItem Name="INT LIGHTS" Action="AS RQRD" />
+				<StateMonitorChecklistItem Name="ECAM RCL" Action="PRESS" VariableName="A32NX_BTN_RCL" Latching="true" RequiredValue="1"/>
+				<InformationalChecklistItem Name="OIL QTY" Action="CHECK" />
+				<StateMonitorChecklistItem Name="FLAPS" Action="CHECK RET" VariableName="A32NX_FLAPS_HANDLE_INDEX" RequiredValue="0"/>
+				<StateMonitorChecklistItem Name="SPD BRK" Action="CHECK RET" VariableName="A32NX_SPOILERS_HANDLE_POSITION" RequiredValue="0"/>
+				<StateMonitorChecklistItem Name="PRK BRK" Action="ON" VariableName="A32NX_PARK_BRAKE_LEVER_POS" RequiredValue="1"/>
+				<InformationalChecklistItem Name="ACCU BRK PRESSURE" Action="CHECK" />
+				<StateMonitorChecklistItem Name="RAIN REPEL L" Action="PRESS" VariableName="A32NX_RAIN_REPELLENT_LEFT_ON" Latching="true" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="RAIN REPEL R" Action="PRESS" VariableName="A32NX_RAIN_REPELLENT_RIGHT_ON" Latching="true" RequiredValue="1"/>
+			</Items>
+		</Checklist>
+		<Checklist Name="BEFORE START">
+			<Items>
+				<InformationalChecklistItem Name="COCKPIT PREP" Action="COMPLETE" />
+				<StateMonitorChecklistItem Name="SEAT BELTS" Action="ON" VariableName="CABIN SEATBELTS ALERT SWITCH" DataOffset="0x66CD" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="SMOKING SIGN" Action="AUTO" VariableName="XMLVAR_SWITCH_OVHD_INTLT_NOSMOKING_Position" RequiredValue="1"/> <!-- inop -->
+				<StateMonitorChecklistItem Name="EMER EXIT LT" Action="AUTO" VariableName="XMLVAR_SWITCH_OVHD_INTLT_EMEREXIT_POSITION" RequiredValue="1"/> <!-- inop -->
+				<StateMonitorChecklistItem Name="ADIR 1" Action="NAV" VariableName="A32NX_OVHD_ADIRS_IR_1_MODE_SELECTOR_KNOB" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="ADIR 2" Action="NAV" VariableName="A32NX_OVHD_ADIRS_IR_2_MODE_SELECTOR_KNOB" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="ADIR 3" Action="NAV" VariableName="A32NX_OVHD_ADIRS_IR_3_MODE_SELECTOR_KNOB" RequiredValue="1"/>
+				<InformationalChecklistItem Name="FUEL QTY" Action="CHECK" />
+				<InformationalChecklistItem Name="FMGS" Action="SET" />
+				<InformationalChecklistItem Name="ALTIMETERS" Action="SET" />
+				<StateMonitorChecklistItem Name="DOORS" Action="CHECK" VariableName="A32NX_ECAM_SD_CURRENT_PAGE_INDEX" RequiredValue="8"/>
+				<StateMonitorChecklistItem Name="BEACON" Action="CHECK" VariableName="LIGHT BEACON" DataOffset="0x66E3" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="PARKING BRAKE" Action="ON" VariableName="A32NX_PARK_BRAKE_LEVER_POS" RequiredValue="1"/>
+			</Items>
+		</Checklist>
+		<Checklist Name="AFTER START">
+			<Items>
+				<!-- todo -->
+				<InformationalChecklistItem Name="ANTIICE" Action="AS RQRD"/>
+				<InformationalChecklistItem Name="ECAM STATUS" Action="CHECK" />
+				<InformationalChecklistItem Name="PITCH TRIM" Action="AS RQRD"/>
+				<InformationalChecklistItem Name="RUDDER TRIM" Action="ZERO"  /> <!-- VariableName="XMLVAR_RUDDERTRIM" -->
+ 			</Items>
+		</Checklist>
+	</Checklists>
+</ChecklistGroup>

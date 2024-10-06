@@ -1,11 +1,6 @@
 ﻿using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MSFSHelper
+namespace MSFSHelper.Helpers
 {
     internal static class ConsoleHelper
     {
@@ -36,7 +31,7 @@ namespace MSFSHelper
                 return str;
             }
 
-            if (str.StartsWith("[bold]")) 
+            if (str.StartsWith("[bold]"))
             {
                 return str;
             }

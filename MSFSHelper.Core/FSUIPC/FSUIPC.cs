@@ -47,15 +47,15 @@ namespace MSFSHelper.Core.FSUIPC
             }
         }
 
-        public async Task<JSONResponse> DeclareOffsetGroup(string varGroupName, params (int address, int size, string name, string type)[] declarations)
+        public async Task<JSONResponse> DeclareOffsetGroup(string varGroupName, params OffsetVar[] declarations)
         {
             OffsetDefinition[] offsets = declarations.Select(it => 
             new OffsetDefinition
             { 
-                name = it.name,
-                address = it.address,
-                type = it.type,
-                size = it.size
+                name = it.Name,
+                address = it.Address,
+                type = it.Type,
+                size = it.Size
             }).ToArray();
 
             JSONRequest request = new JSONOffsetsRequest

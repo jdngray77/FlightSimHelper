@@ -1,25 +1,80 @@
 ﻿using MSFSHelper.Core.FSUIPC;
+using MSFSHelper.Core.Serialization;
+using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace MSFSHelper.Core.Checklists.ChecklistItems
 {
-    public class StateMonitorChecklistItem : BaseChecklistItem
+    [Serializable]
+    public class StateMonitorChecklistItem : BaseChecklistItem, IPostDeserialization, IUpdatable
     {
+        public event EventHandler<ChecklistStateChangedEventArgs> Updated;
+
+        [XmlIgnore]
         public DoubleVar? SimVariable { get; private set; }
 
-        public Predicate<double> Condition { get; private init; }
+        [XmlIgnore]
+        public Predicate<double> Condition { get; private set; }
 
-        public string VariableName { get; private init; }
+        private double _requiredValue;
 
-        public int? DataOffset { get; private init; }
+        [XmlAttribute]
+        public double RequiredValue
+        {
+            get => _requiredValue;
+            set
+            {
+                _requiredValue = value;
+                Condition = x => x == _requiredValue;
+                Update();
+            }
+        }
+
+        [XmlAttribute]
+        public string VariableName { get; [Obsolete] init; }
+
+        [XmlIgnore]
+        public ChecklistDataType DataType { get; private set; }
+
+        [XmlIgnore]
+        public int? DataOffset { get; [Obsolete] set; }
+
+        // This property will be serialized as hexadecimal
+        [XmlAttribute("DataOffset")]
+        public string? DataOffsetHex
+        {
+            get => DataOffset.HasValue ? $"0x{DataOffset.Value:X}" : null;
+            set
+            {
+#pragma warning disable CS0612 // Obsolete. Intended use; serialization.
+
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    DataOffset = null;
+                }
+                else
+                {
+                    DataOffset = Convert.ToInt32(value, 16);
+                }
+#pragma warning restore CS0612
+            }
+        }
 
         /// <summary>
         /// When true, When then State is set to checked,
         /// it cannot be unchecked.
         /// </summary>
+        [XmlAttribute]
+        [DefaultValue(false)]
         public bool Latching { get; init; } = false;
 
+        /// <summary>
+        /// Not intended for code use; use full constructor.
+        /// For serialization.
+        /// </summary>
+        [Obsolete]
+        public StateMonitorChecklistItem() { }
 
-        public ChecklistDataType DataType { get; }
 
         /// <summary>
         /// LVar with expected value.
@@ -114,13 +169,20 @@ namespace MSFSHelper.Core.Checklists.ChecklistItems
             SimVariable = null;
         }
 
+        public bool ShouldSerializeDataOffset()
+        {
+            return DataOffset != null;
+        }
+
         private void Lvar_ValueChanged(object? sender, double e)
         {
             Update();
         }
 
-        private void Update()
+        public void Update()
         {
+            var oldState = State;
+            
             if (SimVariable == null || (Latching && State == ChecklistItemState.Checked))
             {
                 return;
@@ -131,6 +193,22 @@ namespace MSFSHelper.Core.Checklists.ChecklistItems
             if (Latching && State == ChecklistItemState.Checked)
             {
                 StopAutoUpdate();
+            }
+
+            Updated?.Invoke(this, new ChecklistStateChangedEventArgs(oldState, State));
+        }
+
+        public void PostDeserialize()
+        {
+            if (!string.IsNullOrWhiteSpace(VariableName))
+            {
+                if (DataOffset != null)
+                {
+                    DataType = ChecklistDataType.Offset;
+                } else
+                {
+                    DataType = ChecklistDataType.LVar;
+                }
             }
         }
     }
