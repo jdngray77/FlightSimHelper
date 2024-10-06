@@ -10,6 +10,7 @@ From a bit of xml :
 <StateMonitorChecklistItem Name="APU" Action="START" VariableName="A32NX_OVHD_APU_START_PB_IS_AVAILABLE" RequiredValue="1"/>
 <StateMonitorChecklistItem Name="PACK 1" Action="ON" VariableName="A32NX_OVHD_COND_PACK_1_PB_IS_ON" RequiredValue="1"/>
 <StateMonitorChecklistItem Name="PACK 2" Action="ON" VariableName="A32NX_OVHD_COND_PACK_2_PB_IS_ON" RequiredValue="1"/>
+<InformationalChecklistItem Name="INT LIGHTS" Action="AS RQRD" />
 ```
 
 it creates usable checklists! :
