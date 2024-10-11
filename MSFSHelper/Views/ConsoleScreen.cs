@@ -1,5 +1,6 @@
 ﻿using Spectre.Console;
 
+
 namespace MSFSHelper.NewViews
 {
 
@@ -11,6 +12,78 @@ namespace MSFSHelper.NewViews
     public class ConsoleScreen
     {
         public static ConsoleScreen Current;
+
+        public static readonly IReadOnlyList<Spinner> spinners = new List<Spinner>()
+        {
+            Spinner.Known.Default,
+            Spinner.Known.Ascii,
+            Spinner.Known.Dots,
+            Spinner.Known.Dots2,
+            Spinner.Known.Dots3,
+            Spinner.Known.Dots4,
+            Spinner.Known.Dots5,
+            Spinner.Known.Dots6,
+            Spinner.Known.Dots7,
+            Spinner.Known.Dots8,
+            Spinner.Known.Dots9,
+            Spinner.Known.Dots10,
+            Spinner.Known.Dots11,
+            Spinner.Known.Dots12,
+            Spinner.Known.Dots8Bit,
+            Spinner.Known.Line,
+            Spinner.Known.Line2,
+            Spinner.Known.Pipe,
+            Spinner.Known.SimpleDots,
+            Spinner.Known.SimpleDotsScrolling,
+            Spinner.Known.Flip,
+            Spinner.Known.Hamburger,
+            Spinner.Known.Bounce,
+            Spinner.Known.Triangle,
+            Spinner.Known.Arc,
+            Spinner.Known.SquareCorners,
+            Spinner.Known.CircleQuarters,
+            Spinner.Known.CircleHalves,
+            Spinner.Known.Squish,
+            Spinner.Known.Arrow,
+            Spinner.Known.Arrow2,
+            Spinner.Known.Arrow3,
+            Spinner.Known.BouncingBar,
+            Spinner.Known.BouncingBall,
+            Spinner.Known.Material,
+            Spinner.Known.Pong,
+            Spinner.Known.Shark,
+            Spinner.Known.Dqpb,
+            Spinner.Known.Grenade,
+            Spinner.Known.Point,
+            Spinner.Known.Layer,
+            Spinner.Known.BetaWave,
+            Spinner.Known.Aesthetic
+        };
+
+        public static readonly IReadOnlyList<string> spinnerText = new List<string>()
+        {
+            "Beep beep boop haha im thinking!",
+            "Bzzt! Calculating... hold tight!",
+            "Thinking cap on... almost there!",
+            "Crunching the numbers... beep bop!",
+            "Boop! Just a moment, processing...",
+            "Hold on, gears are turning...",
+            "Zipping through data... nearly done!",
+            "Brainstorming... beepity boop!",
+            "Powering up... stay with me!",
+            "Bleep bloop, cooking up some answers!",
+            "Revving up... almost ready!",
+            "Hold my wires... I got this!",
+            "Brain freeze... defrosting now!",
+            "Hang tight, I’m summoning the data spirits!",
+            "Processing... or just staring blankly. You’ll never know!",
+            "Beep bop... pretending to know what I’m doing!",
+            "Hold up... gotta find my thinking socks!",
+            "Calculating... with my imaginary abacus!",
+            "Boop! Brewing knowledge... hope it’s not decaf!",
+            "Revving up... in hamster-wheel mode!",
+            "Brain cells engaged... even the lazy ones!"
+        };
 
         /// <summary>
         /// The screen that will be displayed when no other screen is
@@ -53,8 +126,8 @@ namespace MSFSHelper.NewViews
             View old = CurrentScreen;
             ClearStack();
             viewStack.Add(screen);
-            Render();
             await OnScreenChanged(old, CurrentScreen).ConfigureAwait(false);
+            Render();
         }
 
         /// <summary>
@@ -73,8 +146,8 @@ namespace MSFSHelper.NewViews
 
             View old = CurrentScreen;
             viewStack.Add(screen);
-            Render();
             await OnScreenChanged(old, CurrentScreen).ConfigureAwait(false);
+            Render();
         }
 
         /// <summary>
@@ -90,8 +163,8 @@ namespace MSFSHelper.NewViews
 
             View old = CurrentScreen;
             viewStack.Remove(viewStack.Last());
-            Render();
             await OnScreenChanged(old, CurrentScreen).ConfigureAwait(false);
+            Render();
         }
 
         /// <summary>
@@ -108,8 +181,19 @@ namespace MSFSHelper.NewViews
 
             View old = CurrentScreen;
             ClearStack();
-            Render();
             await OnScreenChanged(old, CurrentScreen).ConfigureAwait(false);
+            Render();
+        }
+
+        public static Spinner GetSpinner()
+        {
+            //return spinners[Random.Shared.Next(spinners.Count)];
+            return Spinner.Known.Flip;
+        }
+
+        public static string GetStatusText()
+        {
+            return spinnerText[Random.Shared.Next(spinnerText.Count)];
         }
 
         private void ClearStack()
@@ -129,8 +213,8 @@ namespace MSFSHelper.NewViews
 
         private async Task OnScreenChanged(View oldScreen, View currentScreen)
         {
-            await oldScreen.OnNoLongerShown().ConfigureAwait(false);
-            await currentScreen.OnShown().ConfigureAwait(false);
+            await oldScreen.OnWillUnshow().ConfigureAwait(false);
+            await currentScreen.OnWillShow().ConfigureAwait(false);
         }
     }
 }

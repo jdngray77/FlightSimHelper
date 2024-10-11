@@ -1,49 +1,157 @@
-﻿<ChecklistGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+﻿<ChecklistGroup 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xsi:schemaLocation="http://www.w3.org ChecklistSchema.xsd">
 	<Checklists>
-		<Checklist Name="PRELIMINARY COCKPIT PREP">
+		<Checklist Name="STARTING THE AIRCRAFT">
 			<Items>
+				<StateMonitorChecklistItem Name="PRK BRK" Action="ON" VariableName="A32NX_PARK_BRAKE_LEVER_POS" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="SPD BRK" Action="CHECK RET" VariableName="A32NX_SPOILERS_HANDLE_POSITION" RequiredValue="0"/>
+				<StateMonitorChecklistItem Name="FLAPS" Action="CHECK RET" VariableName="A32NX_FLAPS_HANDLE_INDEX" RequiredValue="0"/>
+				<StateMonitorChecklistItem Name="RX RADAR SYS" Action="OFF" VariableName="XMLVAR_A320_WEATHERRADAR_SYS" RequiredValue="0" Notes="[gray](inop)[/]"/>
 				<StateMonitorChecklistItem Name="ENG MASTER 1" Action="OFF" VariableName="FUELSYSTEM VALVE SWITCH:1" DataOffset="0x66CB" RequiredValue="0"/>
 				<StateMonitorChecklistItem Name="ENG MASTER 2" Action="OFF" VariableName="FUELSYSTEM VALVE SWITCH:2" DataOffset="0x66CC" RequiredValue="0"/>
 				<StateMonitorChecklistItem Name="ENG MODE SEL" Action="NORM" VariableName="TURB ENG IGNITION SWITCH EX1:1" DataOffset="0x66CA" RequiredValue="1"/>
+				
+				<!-- TODO CONFIRM -->
+				<InformationalChecklistItem Name="THRUST LVRS" Action="IDLE"/>
 				<StateMonitorChecklistItem Name="L/G LVR" Action="DOWN" VariableName="GEAR HANDLE POSITION" RequiredValue="0"/>
 				<StateMonitorChecklistItem Name="WIPERS L" Action="OFF" VariableName="CIRCUIT SWITCH ON:77" DataOffset="0x66D2" RequiredValue="0"/>
 				<StateMonitorChecklistItem Name="WIPERS R" Action="OFF" VariableName="CIRCUIT SWITCH ON:80" DataOffset="0x66D4" RequiredValue="0"/>
+				
+				<!-- TODO IF ELSE 'EXTERNAL POWER AVAILABLE'-->
 				<StateMonitorChecklistItem Name="Battery 1" Action="SET AUTO" VariableName="A32NX_OVHD_ELEC_BAT_1_PB_IS_AUTO" RequiredValue="1"/>
 				<StateMonitorChecklistItem Name="Battery 2" Action="SET AUTO" VariableName="A32NX_OVHD_ELEC_BAT_2_PB_IS_AUTO" RequiredValue="1"/>
+			
+				<StateMonitorChecklistItem Name="EXT PWR" Action="ON" VariableName="EXTERNAL POWER ON" RequiredValue="0" Notes="[gray](inop)[/]"/>
+				
 				<StateMonitorChecklistItem Name="APU FIRE TEST" Action="PERFORM" VariableName="A32NX_FIRE_TEST_APU" Latching="true" RequiredValue="1"/>
-				<StateMonitorChecklistItem Name="APU" Action="START" VariableName="A32NX_OVHD_APU_START_PB_IS_AVAILABLE" RequiredValue="1"/>
-				<StateMonitorChecklistItem Name="PACK 1" Action="ON" VariableName="A32NX_OVHD_COND_PACK_1_PB_IS_ON" RequiredValue="1"/>
-				<StateMonitorChecklistItem Name="PACK 2" Action="ON" VariableName="A32NX_OVHD_COND_PACK_2_PB_IS_ON" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="APU MASTER" Action="ON" VariableName="A32NX_OVHD_APU_MASTER_SW_PB_IS_ON" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="APU" Action="START / AVAIL" VariableName="A32NX_OVHD_APU_START_PB_IS_AVAILABLE" RequiredValue="1"/>
+				
+
 				<InformationalChecklistItem Name="INT LIGHTS" Action="AS RQRD" />
+				<StateMonitorChecklistItem Name="NAV &amp; LOGO LIGHTS" Action="ON" VariableName="LIGHT NAV" RequiredValue="0"  Notes="[gray](inop)[/]"/>
+				<StateMonitorChecklistItem Name="STROBE LIGHT" Action="ON" VariableName="LIGHT STROBE" RequiredValue="0"  Notes="[gray](inop)[/]"/>
+				
 				<StateMonitorChecklistItem Name="ECAM RCL" Action="PRESS" VariableName="A32NX_BTN_RCL" Latching="true" RequiredValue="1"/>
 				<InformationalChecklistItem Name="OIL QTY" Action="CHECK" />
-				<StateMonitorChecklistItem Name="FLAPS" Action="CHECK RET" VariableName="A32NX_FLAPS_HANDLE_INDEX" RequiredValue="0"/>
-				<StateMonitorChecklistItem Name="SPD BRK" Action="CHECK RET" VariableName="A32NX_SPOILERS_HANDLE_POSITION" RequiredValue="0"/>
-				<StateMonitorChecklistItem Name="PRK BRK" Action="ON" VariableName="A32NX_PARK_BRAKE_LEVER_POS" RequiredValue="1"/>
 				<InformationalChecklistItem Name="ACCU BRK PRESSURE" Action="CHECK" />
 				<StateMonitorChecklistItem Name="RAIN REPEL L" Action="PRESS" VariableName="A32NX_RAIN_REPELLENT_LEFT_ON" Latching="true" RequiredValue="1"/>
 				<StateMonitorChecklistItem Name="RAIN REPEL R" Action="PRESS" VariableName="A32NX_RAIN_REPELLENT_RIGHT_ON" Latching="true" RequiredValue="1"/>
-			</Items>
-		</Checklist>
-		<Checklist Name="BEFORE START">
-			<Items>
-				<InformationalChecklistItem Name="COCKPIT PREP" Action="COMPLETE" />
-				<StateMonitorChecklistItem Name="SEAT BELTS" Action="ON" VariableName="CABIN SEATBELTS ALERT SWITCH" DataOffset="0x66CD" RequiredValue="1"/>
-				<StateMonitorChecklistItem Name="SMOKING SIGN" Action="AUTO" VariableName="XMLVAR_SWITCH_OVHD_INTLT_NOSMOKING_Position" RequiredValue="1"/> <!-- inop -->
-				<StateMonitorChecklistItem Name="EMER EXIT LT" Action="AUTO" VariableName="XMLVAR_SWITCH_OVHD_INTLT_EMEREXIT_POSITION" RequiredValue="1"/> <!-- inop -->
+			
+				<StateMonitorChecklistItem Name="APU BLEED" Action="ON" VariableName="A32NX_OVHD_PNEU_APU_BLEED_PB_IS_ON" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="PACK 1" Action="ON" VariableName="A32NX_OVHD_COND_PACK_1_PB_IS_ON" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="PACK 2" Action="ON" VariableName="A32NX_OVHD_COND_PACK_2_PB_IS_ON" RequiredValue="1"/>
+
+				<StateMonitorChecklistItem Name="CREW SUPPLY" Action="ON" VariableName="PUSH_OVHD_OXYGEN_CREW" RequiredValue="1"/>
+				
 				<StateMonitorChecklistItem Name="ADIR 1" Action="NAV" VariableName="A32NX_OVHD_ADIRS_IR_1_MODE_SELECTOR_KNOB" RequiredValue="1"/>
 				<StateMonitorChecklistItem Name="ADIR 2" Action="NAV" VariableName="A32NX_OVHD_ADIRS_IR_2_MODE_SELECTOR_KNOB" RequiredValue="1"/>
 				<StateMonitorChecklistItem Name="ADIR 3" Action="NAV" VariableName="A32NX_OVHD_ADIRS_IR_3_MODE_SELECTOR_KNOB" RequiredValue="1"/>
-				<InformationalChecklistItem Name="FUEL QTY" Action="CHECK" />
-				<InformationalChecklistItem Name="FMGS" Action="SET" />
-				<InformationalChecklistItem Name="ALTIMETERS" Action="SET" />
-				<StateMonitorChecklistItem Name="DOORS" Action="CHECK" VariableName="A32NX_ECAM_SD_CURRENT_PAGE_INDEX" RequiredValue="8"/>
-				<StateMonitorChecklistItem Name="BEACON" Action="CHECK" VariableName="LIGHT BEACON" DataOffset="0x66E3" RequiredValue="1"/>
-				<StateMonitorChecklistItem Name="PARKING BRAKE" Action="ON" VariableName="A32NX_PARK_BRAKE_LEVER_POS" RequiredValue="1"/>
+				
+				<StateMonitorChecklistItem Name="FUEL QTY" Action="CHECK / UPLOAD" VariableName="A32NX_ECAM_SD_CURRENT_PAGE_INDEX" RequiredValue="5" Latching="true"/>
+				
+				<StateMonitorChecklistItem Name="SEAT BELTS" Action="ON" VariableName="CABIN SEATBELTS ALERT SWITCH" DataOffset="0x66CD" RequiredValue="1"/>
+				<InformationalChecklistItem Name="SMOKING SIGN" Action="AUTO"/> <!-- inop VariableName="XMLVAR_SWITCH_OVHD_INTLT_NOSMOKING_Position" RequiredValue="1" -->
+				<InformationalChecklistItem Name="EMER EXIT LT" Action="AUTO"/> <!-- inop VariableName="XMLVAR_SWITCH_OVHD_INTLT_EMEREXIT_POSITION" RequiredValue="1" -->
+				
+				<InformationalChecklistItem Name="CABIN ELEVATION" Action="CHECK AUTO" /> <!-- manual check -->
+
+				<InformationalChecklistItem Name="CABIN TEMPERATURE" Action="CHECK" /> <!-- manual check -->
+
+				<StateMonitorChecklistItem Name="FUEL PMP L 1" Action="ON" VariableName="FUELSYSTEM PUMP SWITCH:2" RequiredValue="0"  Notes="[gray](inop)[/]"/>
+				<StateMonitorChecklistItem Name="FUEL PMP L 2" Action="ON" VariableName="FUELSYSTEM PUMP SWITCH:5" RequiredValue="0"  Notes="[gray](inop)[/]"/>
+				<StateMonitorChecklistItem Name="FUEL PMP C 1" Action="ON" VariableName="FUELSYSTEM PUMP SWITCH:9" RequiredValue="0"  Notes="[gray](inop)[/]"/>
+				<StateMonitorChecklistItem Name="FUEL PMP C 2" Action="ON" VariableName="FUELSYSTEM PUMP SWITCH:10" RequiredValue="0"  Notes="[gray](inop)[/]"/>
+				<StateMonitorChecklistItem Name="FUEL PMP R 1" Action="ON" VariableName="FUELSYSTEM PUMP SWITCH:3" RequiredValue="0"  Notes="[gray](inop)[/]"/>
+				<StateMonitorChecklistItem Name="FUEL PMP R 2" Action="ON" VariableName="FUELSYSTEM PUMP SWITCH:6" RequiredValue="0"  Notes="[gray](inop)[/]"/>
+				
+				<InformationalChecklistItem Name="FMGS / CDU" Action="DASHED" />
+				<StateMonitorChecklistItem Name="ALTIMETERS" Action="SET QNH" VariableName="XMLVAR_Baro1_Mode" RequiredValue="1"/>
+				
+				<StateMonitorChecklistItem Name="DOORS" Action="CHECK" VariableName="A32NX_ECAM_SD_CURRENT_PAGE_INDEX" RequiredValue="8" Latching="true"/>
+			
+				<InformationalChecklistItem Name="RADIO ACTIVE" Action="SET TO ATIS"/>
+				<InformationalChecklistItem Name="RADIO STBY" Action="SET TO GROUND"/>
+				
+				<StateMonitorChecklistItem Name="FLIGHT DIR" Action="ON" VariableName="AUTOPILOT FLIGHT DIRECTOR ACTIVE" RequiredValue="0" Notes="[gray](inop)[/]"/>
+				
+				
 			</Items>
 		</Checklist>
-		<Checklist Name="AFTER START">
+		
+		
+			
+		
+		
+		
+		
+			
+				
+				
+				
+				
+				
+		
+		<Checklist Name="CONFIGURE THE MCDU">
 			<Items>
+				<!-- TODO Notes Column -->
+				
+				<InformationalChecklistItem Name="FLIGHT PLAN" Action="OBTAIN" Notes="i.e SimBrief. Import into tablet &amp; Little NavMap."/>
+				
+				<InformationalChecklistItem Name="IFR CLEARANCE" Action="OBTAIN FROM ATC" Notes="READBACK CHECKLIST :
+																								 - Cleared to the destination via specified route in the filed flight plan.
+																								 - Initial cleared altitude after departure.
+																								 - Assigned SID for departure OR radar vectors
+																								 - Assigned departing runway.
+																								 - Transponder/squawk code.
+																								 - Departure frequency."
+				/>
+				
+				<InformationalChecklistItem Name="MCDU INIT A" Action="INIT REQUEST IF AVAIL" Notes="If using SimBrief or a dept and arriv airport were selected
+																									 in MSFS then INIT REQUEST may be used. Otherwise, manually
+																									 enter flight plan."/>
+				<InformationalChecklistItem Name="MCDU INIT A" Action="COMPLETE" Notes="INIT A :
+																						- FROM/TO
+																						- FLT NBR
+																						- COST INDEX
+																						- WIND/TEMP > WIND REQUEST (for all phases)
+																						- CRZ FL/TEMP
+																						"/>
+				
+				<InformationalChecklistItem Name="MCDU F/PLAN" Action="COMPLETE" Notes="F/PLAN :
+																						- CHK F/PLAN
+																						- Enter SID/STARs
+																						- Handle discontinuities
+																						"/>
+				
+				<InformationalChecklistItem Name="MCDU SEC F/PLAN" Action="INOP"/>		
+				
+				
+				<InformationalChecklistItem Name="MCDU RAD NAV" Action="COMPLETE" Notes="RAD NAV
+																						- CHK AUTOTUNE. VERIFY USEFUL VOR.
+																						- CHK DEPARTURE ILS
+																						- CHK ARRIVAL ILS
+																						"/>
+				
+				<InformationalChecklistItem Name="MCDU INIT B" Action="COMPLETE" Notes="INIT B
+																						- ENTER ZFW/ZFWCG (FROM TABLET > PAYLOAD, OR AUTO-INSERT)
+																						- FOB : EITHER INIT (LETS MCDU PRED FUEL), OR ENTER FROM FLIGHT PLAN.
+																						"/>
+				
+				<InformationalChecklistItem Name="MCDU PERF" Action="COMPLETE" Notes="PERF :
+																					  - CALC T/P PERF USING TABLET
+																					  - FLEX TO TEMP
+																					  - CW/FLAPS
+																					  - TRANS ALT (IF PROVIDED IN F/PLAN)
+																					  - V1/R/2 AUTO-INSERT
+																						"/>
+				
+				<StateMonitorChecklistItem Name="ATC MODE" Action="STBY" VariableName="A32NX_TRANSPONDER_MODE" RequiredValue="0"/>
+				<InformationalChecklistItem Name="SQUARK" Action="SET"/>
+				
+				
 				<!-- todo -->
 				<InformationalChecklistItem Name="ANTIICE" Action="AS RQRD"/>
 				<InformationalChecklistItem Name="ECAM STATUS" Action="CHECK" />
@@ -51,5 +159,217 @@
 				<InformationalChecklistItem Name="RUDDER TRIM" Action="ZERO"  /> <!-- VariableName="XMLVAR_RUDDERTRIM" -->
  			</Items>
 		</Checklist>
+		
+		
+			
+		
+		
+		
+		
+			
+				
+				
+				
+				
+				
+				
+				
+				
+	
+		<Checklist Name="PUSHBACK">
+			<Items>
+				<!-- PRE-REQS -->
+				<InformationalChecklistItem Name="-- PRE-REQUISITES --" Action="-----"/>
+				
+				<InformationalChecklistItem Name="DOORS" Action="CLOSED &amp; ARMED"/>
+				<InformationalChecklistItem Name="EXT VEHICLES" Action="CLEAR"/>
+				<InformationalChecklistItem Name="AIRSTAIRS/WALKWAY" Action="CLEAR"/>
+				<InformationalChecklistItem Name="GPU" Action="CLEAR"/>
+				<StateMonitorChecklistItem Name="APU" Action="AVAIL" VariableName="A32NX_OVHD_APU_START_PB_IS_AVAILABLE" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="APU BLEED" Action="ON" VariableName="A32NX_OVHD_PNEU_APU_BLEED_PB_IS_ON" RequiredValue="1"/>
+				
+				<InformationalChecklistItem Name="-- END PRE-REQUISITES --" Action="-----"/>
+				
+				<StateMonitorChecklistItem Name="BEACON LIGHT" Action="ON" VariableName="LIGHT BEACON" RequiredValue="1" Notes="Used to warn aircraft is of danger to those on the ground.
+																																i.e in motion or engines running."/>
+				
+				<InformationalChecklistItem Name="RADIO ACTIVE" Action="SET TO GROUND"/>
+				
+				<InformationalChecklistItem Name="PUSH CLEARANCE" Action="OBTAIN" Notes="State your stand, location to push to, and direction you wish to face."/>
+				<StateMonitorChecklistItem Name="PRK BRK" Action="OFF" VariableName="A32NX_PARK_BRAKE_LEVER_POS" RequiredValue="0" Latching="true"/>
+				<InformationalChecklistItem Name="PUSHBACK" Action="PERFORM"/>
+				<StateMonitorChecklistItem Name="PRK BRK" Action="ON" VariableName="A32NX_PARK_BRAKE_LEVER_POS" RequiredValue="1" Latching="true"/>
+			</Items>
+		</Checklist>
+		
+		
+			
+		
+		
+		
+		<Checklist Name="ENGINE START">
+			<Items>		
+				<StateMonitorChecklistItem Name="ENG MODE SEL" Action="IGN/START" VariableName="TURB ENG IGNITION SWITCH EX1:1" DataOffset="0x66CA" RequiredValue="2"/>
+				
+				<StateMonitorChecklistItem Name="ENG MASTER 2" Action="OFF" VariableName="FUELSYSTEM VALVE SWITCH:2" DataOffset="0x66CC" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="ENG 2" Action="AWAIT AVAIL" VariableName="A32NX_OVHD_ELEC_ENG_GEN_2_PB_HAS_FAULT" RequiredValue="0"
+										   Notes="Verify start :
+												  - N1 ~19%
+												  - N1 Reported AVAIL
+												  - N2 ~68%
+												  - EGT ~520°C
+												  - FF ~290 kg/h"/>
+
+				<StateMonitorChecklistItem Name="ENG MASTER 1" Action="OFF" VariableName="FUELSYSTEM VALVE SWITCH:1" DataOffset="0x66CB" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="ENG 2" Action="AWAIT AVAIL" VariableName="A32NX_OVHD_ELEC_ENG_GEN_1_PB_HAS_FAULT" RequiredValue="0"
+										    Notes="Verify start :
+												  - N1 ~19%
+												  - N1 Reported AVAIL
+												  - N2 ~68%
+												  - EGT ~520°C
+												  - FF ~290 kg/h"/>
+				
+				
+				<StateMonitorChecklistItem Name="ENG MODE SEL" Action="NORM" VariableName="TURB ENG IGNITION SWITCH EX1:1" DataOffset="0x66CA" RequiredValue="1"/>
+			</Items>
+		</Checklist>
+		
+		
+			
+				
+				
+		
+		<Checklist Name="AFTER START">
+			<Items>		
+				
+				<InformationalChecklistItem Name="FLAPS" Action="SET T/O"/>
+				<InformationalChecklistItem Name="PITCH TRIM" Action="SET T/O"/>
+				<InformationalChecklistItem Name="PITCH TRIM" Action="SET T/O"/>
+				
+				
+				<StateMonitorChecklistItem Name="GND SPLR" Action="ARM" VariableName="SPOILERS ARMED" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="APU BLEED" Action="OFF" VariableName="A32NX_OVHD_PNEU_APU_BLEED_PB_IS_ON" RequiredValue="0"/>
+				<StateMonitorChecklistItem Name="APU MASTER" Action="OFF" VariableName="A32NX_OVHD_APU_MASTER_SW_PB_IS_ON" RequiredValue="0"/>
+				
+				<InformationalChecklistItem Name="ANTI ICE" Action="AS RQRD"/>
+				
+				<InformationalChecklistItem Name="ECAM STATUS" Action="CHECK" />
+				<StateMonitorChecklistItem Name="RUDDER TRIM" Action="ZERO" VariableName="RUDDER TRIM PCT" RequiredValue="0"/>
+ 			</Items>
+		</Checklist>
+		
+		<Checklist Name="TAXI">
+			<Items>		
+			
+				<StateMonitorChecklistItem Name="APU BLEED" Action="OFF" VariableName="A32NX_OVHD_PNEU_APU_BLEED_PB_IS_ON" RequiredValue="0"/>
+				<StateMonitorChecklistItem Name="APU MASTER" Action="OFF" VariableName="A32NX_OVHD_APU_MASTER_SW_PB_IS_ON" RequiredValue="0"/>
+				
+				<InformationalChecklistItem Name="ANTI ICE" Action="AS RQRD"/>
+				
+				<InformationalChecklistItem Name="ECAM STATUS" Action="CHECK" />
+				<InformationalChecklistItem Name="RUDDER TRIM" Action="ZERO" VariableName="RUDDER TRIM PCT" RequiredValue="0"/>
+			
+
+				<InformationalChecklistItem Name="TAXI CLEARANCE" Action="OBTAIN" Notes="Specify intended runway. Note &amp; recite taxi instructions." />
+				
+				<StateMonitorChecklistItem Name="R/W TURNOFF LIGHT" Action="ON" VariableName="LIGHT TAXI:2" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="NOSE LIGHT" Action="TAXI" VariableName="LIGHT TAXI" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="PRK BRK" Action="OFF" VariableName="A32NX_PARK_BRAKE_LEVER_POS" RequiredValue="0"/>
+				
+				<InformationalChecklistItem Name="TAXI" Action="PERFORM" Notes="G/S speed lim is 30knts. Once at 30knts, brake to 10knts
+																				lim for turns is 15knts, sharp turns is 10knts." />
+ 			</Items>
+		</Checklist>
+				
+		<Checklist Name="BEFORE TAKEOFF">
+			<Items>		
+				<StateMonitorChecklistItem Name="ENG MODE SEL" Action="NORM" VariableName="TURB ENG IGNITION SWITCH EX1:1" DataOffset="0x66CA" RequiredValue="1"/>
+				
+				<InformationalChecklistItem Name="FLAPS" Action="SET T/O"/>
+				<InformationalChecklistItem Name="PITCH TRIM" Action="SET T/O"/>
+				<StateMonitorChecklistItem  Name="GND SPLR" Action="ARM" VariableName="SPOILERS ARMED" RequiredValue="1"/>
+				
+				<InformationalChecklistItem Name="ECAM STATUS" Action="CHECK" />
+			
+				<StateMonitorChecklistItem Name="FLT CTRL CHK" Action="PERFORM" VariableName="A32NX_ECAM_SD_CURRENT_PAGE_INDEX" RequiredValue="10" 
+										   Notes="Verify full freedom of movement in rudder, elevator, and ailerons." />
+			
+				<InformationalChecklistItem Name="FCU ALT" Action="SET CLEARED ALT" />
+				<InformationalChecklistItem Name="FCU HDG" Action="SET IF RQRD" />
+				<InformationalChecklistItem Name="FCU CLMB SPD / SPD LIMIT" Action="SET IF RQRD" />
+				<InformationalChecklistItem Name="FCU CLMB SPD / SPD LIMIT" Action="SET IF RQRD" />
+				
+				<StateMonitorChecklistItem Name="FLIGHT DIR" Action="ON" VariableName="AUTOPILOT FLIGHT DIRECTOR ACTIVE" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="RX RADAR SYS" Action="ON" VariableName="XMLVAR_A320_WEATHERRADAR_SYS" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="RX RADAR PWS" Action="AUTO" VariableName="A32NX_SWITCH_RADAR_PWS_POSITION" RequiredValue="1"/>
+				<InformationalChecklistItem Name="SQUARK" Action="CONFIRM" />
+				<StateMonitorChecklistItem Name="ATC MODE" Action="AUTO" VariableName="A32NX_TRANSPONDER_MODE" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="TCAS TRAFFIC" Action="ALL" VariableName="A32NX_SWITCH_TCAS_TRAFFIC_POSITION" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="TCAS" Action="TA/RA" VariableName="A32NX_SWITCH_TCAS_POSITION" RequiredValue="2"/>
+				
+				<StateMonitorChecklistItem Name="AUTO BRK" Action="MAX" VariableName="A32NX_AUTOBRAKES_ARMED_MODE" RequiredValue="3"/>
+			
+				<InformationalChecklistItem Name="RADIO ACTIVE" Action="SET TO GROUND"/>
+				<InformationalChecklistItem Name="RADIO STBY" Action="SET TO DEPARTURE"/>
+				
+				<StateMonitorChecklistItem Name="A/THR" Action="ARM"  VariableName="A32NX_AUTOTHRUST_STATUS" RequiredValue="1"/>
+				
+				<InformationalChecklistItem Name="OVHD" Action="CHECK NO LIGHTS" Notes="Check for 'OFF' or 'FAULT' lights."/>
+				
+				<InformationalChecklistItem Name="ECAM T/O" Action="CHECK NO BLUE"/>
+				<StateMonitorChecklistItem Name="ECAM T/O CONFIG CHK" Action="PERFORM" VariableName="A32NX_BTN_TOCONFIG" RequiredValue="1" Latching="true"/>
+				
+				
+				<StateMonitorChecklistItem Name="PACK 1" Action="OFF" VariableName="A32NX_OVHD_COND_PACK_1_PB_IS_ON" RequiredValue="0"/>
+				<StateMonitorChecklistItem Name="PACK 2" Action="OFF" VariableName="A32NX_OVHD_COND_PACK_2_PB_IS_ON" RequiredValue="0"/>
+				<StateMonitorChecklistItem Name="CABIN" Action="NOTIFY" VariableName="PUSH_OVHD_CALLS_ALL" RequiredValue="1" Latching="true"/>
+ 			</Items>
+		</Checklist>
+		
+		
+
+		
+			<Checklist Name="TAKEOFF, CLIMB, CRUISE">
+			<Items>		
+				<InformationalChecklistItem Name="T/O CLEARANCE" Action="OBTAIN"/>
+
+				<StateMonitorChecklistItem Name="R/W TURNOFF LIGHT" Action="ON" VariableName="LIGHT TAXI:2" RequiredValue="1" Latching="true"
+										   Notes="Turning exterior lights on decreases change of birdstrike during takeoff."/>
+				<StateMonitorChecklistItem Name="NOSE LIGHT" Action="TAXI" VariableName="LIGHT TAXI" RequiredValue="1" Latching="true"/>
+				<StateMonitorChecklistItem Name="LAND LIGHT L" Action="ON" VariableName="LIGHTING_LANDING_2" RequiredValue="0" Latching="true"/>
+				<StateMonitorChecklistItem Name="LAND LIGHT R" Action="ON" VariableName="LIGHTING_LANDING_1" RequiredValue="0" Latching="true"/>
+				<StateMonitorChecklistItem Name="BEACON LIGHT" Action="ON" VariableName="LIGHT BEACON" RequiredValue="1" Latching="true"/>
+				<StateMonitorChecklistItem Name="STROBE LIGHT" Action="ON" VariableName="LIGHT STROBE" RequiredValue="1" Latching="true"/>
+				<StateMonitorChecklistItem Name="NAV &amp; LOGO LIGHTS" Action="ON" VariableName="LIGHT NAV" RequiredValue="1" Latching="true"/>
+				<StateMonitorChecklistItem Name="WING LIGHT" Action="OFF" VariableName="LIGHT WING" RequiredValue="0" Latching="true"/>
+				
+				<StateMonitorChecklistItem Name="PRK BRK" Action="OFF" VariableName="A32NX_PARK_BRAKE_LEVER_POS" RequiredValue="0" Notes="Use foot brake to keep still until engines stable."/>
+				
+				<InformationalChecklistItem Name="THR N1" Action="STAB AT 50% N1"/>
+				<InformationalChecklistItem Name="SIDESTICK" Action="HALF FORWARD" Notes="Keeps nose down &amp; pressure on nose wheel for steering."/>
+				<InformationalChecklistItem Name="THRST LVR" Action="MCT / TO GA"/>
+				<InformationalChecklistItem Name="V1/VR" Action="MONIT / ROTATE" Notes="Release down pressure at 80knts. Rotate to +10° at VR."/>
+				<InformationalChecklistItem Name="CLIMB RATE" Action="CONFIRM CLIMBING"/>
+				<StateMonitorChecklistItem Name="L/G LVR" Action="UP" VariableName="GEAR HANDLE POSITION" RequiredValue="1"/>
+				
+				<InformationalChecklistItem Name="-- INITIAL CLMB --" Action="----"/>
+				<InformationalChecklistItem Name="THR LVR" Action="CL DETENT" Notes="Retract when at 1500ft radio alt."/>
+				<StateMonitorChecklistItem Name="A/THR" Action="ENGAGE" VariableName="A32NX_AUTOTHRUST_STATUS" RequiredValue="2" 
+										   Notes="If armed, should auto-engage after selecing CL" Latching="true"/>
+			
+				<StateMonitorChecklistItem Name="AP 1" Action="ENGAGE" VariableName="A32NX_AUTOPILOT_1_ACTIVE" RequiredValue="1" Latching="true"/>
+			
+				<StateMonitorChecklistItem Name="FLAPS" Action="RETRACT" VariableName="	A32NX_FLAPS_HANDLE_INDEX" RequiredValue="0"
+										   Notes="First, Retract at 'S' speed. Then at 'F' speed until flaps 0."/>
+			
+			
+				<StateMonitorChecklistItem Name="R/W TURNOFF LIGHT" Action="ON" VariableName="LIGHT TAXI:2" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="NOSE LIGHT" Action="TAXI" VariableName="LIGHT TAXI" RequiredValue="1"/>
+			
+				<StateMonitorChecklistItem Name="PACK 1" Action="ON" VariableName="A32NX_OVHD_COND_PACK_1_PB_IS_ON" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="PACK 2" Action="ON" VariableName="A32NX_OVHD_COND_PACK_2_PB_IS_ON" RequiredValue="1"/>
+ 			</Items>
+		</Checklist>
+			<!-- continue from T/o -->
 	</Checklists>
 </ChecklistGroup>

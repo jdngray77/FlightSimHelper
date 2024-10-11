@@ -143,6 +143,23 @@ namespace MSFSHelper.Core.FSUIPC
             return group;
         }
 
+        public async Task DeleteVariableGroup(VariableGroup group)
+        {
+            if (!VariableGroups.Remove(group.GroupName))
+            {
+                return;
+            }
+
+            if (group.IsOffset)
+            {
+                await ws.RemoveOffsetGroup(group.GroupName).ConfigureAwait(false);
+            }
+            else
+            {
+                await ws.RemoveVariableGroup(group.GroupName).ConfigureAwait(false);
+            }
+        }
+
         public bool TryFindSimVariable(string name, out DoubleVar lvar)
         {
             foreach (VariableGroup group in VariableGroups.Values)

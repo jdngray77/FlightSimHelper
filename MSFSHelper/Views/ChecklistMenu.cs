@@ -23,17 +23,25 @@ namespace MSFSHelper.NewViews
         public override async Task Render()
         {
             var prompt = new SelectionPrompt<Checklist>()
-                {
+             {
                 Converter = it => it.Name
-                };
+            };
 
-            prompt.Title("Choose a Checklist")
+            prompt
+                .EnableSearch()
+                .Title("Choose a Checklist")
                 .PageSize(10)
                 .AddChoices(checklists);
 
             Checklist list = AnsiConsole.Prompt(prompt);
 
-            await ConsoleScreen.Current.AddScreen(new ChecklistView(list));
+            await AnsiConsole.Status()
+                .Spinner(ConsoleScreen.GetSpinner())
+                .StartAsync(ConsoleScreen.GetStatusText(),
+                async ctx =>
+                {
+                    await ConsoleScreen.Current.AddScreen(new ChecklistView(list));
+                }).ConfigureAwait(false);
         }
     }
 }

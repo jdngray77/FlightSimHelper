@@ -17,6 +17,9 @@ namespace MSFSHelper.Core.Checklists.ChecklistItems
         [XmlAttribute]
         public virtual string Action { get; init; }
 
+        [XmlAttribute]
+        public virtual string Notes { get; init; }
+
         [XmlIgnore]
         public virtual ChecklistItemState State { get; protected set; }
 

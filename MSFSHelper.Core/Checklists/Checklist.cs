@@ -77,14 +77,15 @@ namespace MSFSHelper.Core.Checklists
                 } else
                 {
                     Console.WriteLine($"No simvar found for Checklist Item {item.Name}");
-                  /// <summary>
-        /// Hooks the provided variable group to the state monitor checklist items and updates them accordingly.
-        /// </summary>
-        /// <param name="variableGroup">The variable group containing variables to be used for updating checklist items.</param>
-      }
+
+                }
             }
         }
 
+        /// <summary>
+        /// Hooks the provided variable group to the state monitor checklist items and updates them accordingly.
+        /// </summary>
+        /// <param name="variableGroup">The variable group containing variables to be used for updating checklist items.</param>
         public void Hook(VariableGroup variableGroup)
         {
             foreach (StateMonitorChecklistItem item in Items
@@ -98,13 +99,23 @@ namespace MSFSHelper.Core.Checklists
                 else
                 {
                     Console.WriteLine($"No LVar found for Checklist Item {item.Name}");
-                  /// <summary>
-        /// Releases all resources used by the current instance of the class.
-        /// </summary>
-      }
+
+                }
             }
         }
 
+        public void UnhookAll()
+        {
+            foreach (StateMonitorChecklistItem item in Items
+                .Where(it => it is StateMonitorChecklistItem))
+            {
+                item.StopAutoUpdate();
+            }
+        }
+
+        /// <summary>
+        /// Releases all resources used by the current instance of the class.
+        /// </summary>
         public void Dispose() 
         {
             

@@ -5,6 +5,8 @@ using MSFSHelper.Core.FSUIPC;
 using MSFSHelper.Core.Serialization;
 using MSFSHelper.NewViews;
 using Spectre.Console;
+using System.Diagnostics;
+using System.Text;
 
 //Checklist afterStartChecklist = new Checklist(
 //    "AFTER START",
@@ -13,8 +15,6 @@ using Spectre.Console;
 //    new StateMonitorChecklistItem("PITCH TRIM", "AS RQRD", "A32NX_PARK_BRAKE_LEVER_POS", 1), // check if ok
 //    new StateMonitorChecklistItem("RUDDER TRIM", "ZERO", "XMLVAR_RUDDERTRIM", 0) // 0?
 //    );
-
-
 
 
 // ======================================================
@@ -33,6 +33,7 @@ Console.WriteLine($"Read {checklists.Checklists.Count} checklists from data dire
 FSUIPC ipc = new FSUIPC();
 
 await AnsiConsole.Status()
+    .Spinner(ConsoleScreen.GetSpinner())
     .StartAsync("Connecting to sim...", async ctx =>
     {
         ipc.Initialize();
@@ -58,16 +59,6 @@ await AnsiConsole.Status()
 // ======================================================
 
 VariableGroupManager groupManager = new VariableGroupManager(ipc);
-
-foreach (var checklist in checklists.Checklists)
-{
-    VariableGroup lvarGroup = await groupManager.DeclareVariableGroup(checklist.Name + "_lvars", checklist.GetLVarNames()).ConfigureAwait(false);
-    VariableGroup offsetGroup = await groupManager.DeclareOffsetGroup(checklist.Name + "_offsets", checklist.GetOffsets()).ConfigureAwait(false);
-
-    checklist.Hook(lvarGroup);
-    checklist.Hook(offsetGroup);
-}
-
 
 // ======================================================
 // Define UI.

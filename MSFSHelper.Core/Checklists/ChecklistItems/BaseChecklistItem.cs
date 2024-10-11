@@ -13,6 +13,9 @@ namespace MSFSHelper.Core.Checklists.ChecklistItems
         [XmlAttribute]
         public override string Action { get; init; }
 
+        [XmlAttribute]
+        public override string Notes { get; init; }
+
         #endregion User representation
 
         [XmlIgnore]

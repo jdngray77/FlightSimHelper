@@ -1,5 +1,4 @@
-﻿using MSFSHelper.Core;
-using MSFSHelper.Core.Checklists;
+﻿using MSFSHelper.Core.Checklists;
 using MSFSHelper.Core.Checklists.ChecklistItems;
 using MSFSHelper.Core.FSUIPC;
 using MSFSHelper.ViewHelpers;
@@ -13,24 +12,48 @@ namespace MSFSHelper.NewViews
         private static ChecklistItemRenderer renderer = new ChecklistItemRenderer();
 
         private Checklist list;
+        private VariableGroup? lvarGroup = null;
+        private VariableGroup? offsetGroup = null;
 
         public ChecklistView(Checklist list)
         {
             this.list = list;
         }
 
-        public override async Task OnShown()
+        public override async Task OnWillShow()
         {
-            await base.OnShown();
-            await VariableGroupManager.PrimaryManager.AutoUpdateGroupsStartingWith(list.Name).ConfigureAwait(false);
+            await base.OnWillShow();
+
+            var groupManager = VariableGroupManager.PrimaryManager;
+
+            lvarGroup = await groupManager.DeclareVariableGroup(list.Name + "_lvars",   list.GetLVarNames()).ConfigureAwait(false);
+            offsetGroup = await groupManager.DeclareOffsetGroup(list.Name + "_offsets", list.GetOffsets()).ConfigureAwait(false);
+
+            list.Hook(lvarGroup!);
+            list.Hook(offsetGroup!);
+
+            await groupManager.AutoUpdateVariableGroup(lvarGroup).ConfigureAwait(false);
+            await groupManager.AutoUpdateVariableGroup(offsetGroup).ConfigureAwait(false);
+
             list.Updated += List_Updated;
         }
 
-        public override async Task OnNoLongerShown()
+        public override async Task OnWillUnshow()
         {
-            await base.OnNoLongerShown();
-            await VariableGroupManager.PrimaryManager.StopUpdatingAllGroups().ConfigureAwait(false);
+            await base.OnWillUnshow();
+
+            var groupManager = VariableGroupManager.PrimaryManager;
+
             list.Updated -= List_Updated;
+
+            await groupManager.StopUpdatingAllGroups().ConfigureAwait(false);
+            list.UnhookAll();
+
+            await groupManager.DeleteVariableGroup(lvarGroup).ConfigureAwait(false);
+            await groupManager.DeleteVariableGroup(offsetGroup).ConfigureAwait(false);
+
+            lvarGroup = null;
+            offsetGroup = null;
         }
 
         public override async Task Render()
@@ -48,9 +71,14 @@ namespace MSFSHelper.NewViews
             AnsiConsole.Clear();
 
             Table table = new Table();
-            table.AddColumn("Name")
+            table
+                .Border(TableBorder.SimpleHeavy)
+                .Title(checklist.Name)
+                .AddColumn("Name")
                 .AddColumn("Action")
-                .AddColumn("Complete");
+                .AddColumn("Complete")
+                .AddColumn("Notes")
+                .Width(200);
 
             var next = checklist.IsComplete ? checklist.Items.Last() : checklist.Next();
             int nonEndIndex = Math.Max(0, checklist.Items.IndexOf(next) - maxItems / 2);
@@ -90,7 +118,8 @@ namespace MSFSHelper.NewViews
                 table.AddRow(
                     renderer.StyleText((isActive ? "> " : string.Empty) + item.Name, item, isActive),
                     renderer.StyleText(item.Action, item, isActive),
-                    renderer.StyleText(item.State.ToString(), item, isActive));
+                    renderer.StyleText(item.State.ToString(), item, isActive),
+                    renderer.StyleText(item.Notes ?? string.Empty, item, isActive));
 
                 // StyleRow(isActive, item, color, (isActive & !item.ConditionMet == true ? "> " : string.Empty) + item.name),
                 // StyleRow(isActive, item, color, item.action),

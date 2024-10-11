@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<!-- Root element -->
+	<xs:element name="ChecklistGroup">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Checklists">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Checklist" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Items">
+											<xs:complexType>
+												<xs:sequence>
+													<!-- StateMonitorChecklistItem definition -->
+													<xs:element name="StateMonitorChecklistItem" maxOccurs="unbounded" minOccurs="0">
+														<xs:complexType>
+															<xs:attribute name="Name" type="xs:string" use="required" />
+															<xs:attribute name="Action" type="xs:string" use="required" />
+															<xs:attribute name="Notes" type="xs:string" use="optional" />
+
+															<xs:attribute name="VariableName" type="xs:string" use="required" />
+															<xs:attribute name="RequiredValue" type="xs:string" use="required" />
+															<xs:attribute name="DataOffset" type="xs:string" use="optional" />
+															<xs:attribute name="Latching" type="xs:boolean" use="optional" />
+														</xs:complexType>
+													</xs:element>
+
+													<!-- InformationalChecklistItem definition -->
+													<xs:element name="InformationalChecklistItem" maxOccurs="unbounded" minOccurs="0">
+														<xs:complexType>
+															<xs:attribute name="Name" type="xs:string" use="required" />
+															<xs:attribute name="Action" type="xs:string" use="required" />
+															<xs:attribute name="Notes" type="xs:string" use="optional" />
+														</xs:complexType>
+													</xs:element>
+
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="Name" type="xs:string" use="required" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

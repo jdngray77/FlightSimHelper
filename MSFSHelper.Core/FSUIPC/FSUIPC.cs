@@ -100,7 +100,16 @@ namespace MSFSHelper.Core.FSUIPC
             return response;
         }
 
-        // TODO stop offset polling
+        public async Task<JSONResponse> RemoveOffsetGroup(string varGroupName)
+        {
+            JSONRequest request = new JSONVarsRequest
+            {
+                command = "offsets.remove",
+                name = varGroupName,
+            };
+
+            return ConvertResponse.offsets.remove(await SendAndAwait(request).ConfigureAwait(false));
+        }
 
         public async Task<JSONResponse> DeclareVariableGroup(string varGroupName, params string[] declarations)
         {
@@ -167,6 +176,17 @@ namespace MSFSHelper.Core.FSUIPC
             }
 
             return ConvertResponse.vars.stop(await SendAndAwait(request).ConfigureAwait(false));
+        }
+
+        public async Task<JSONResponse> RemoveVariableGroup(string varGroupName)
+        {
+            JSONRequest request = new JSONVarsRequest
+            {
+                command = "vars.remove",
+                name = varGroupName,
+            };
+
+            return ConvertResponse.vars.remove(await SendAndAwait(request).ConfigureAwait(false));
         }
 
         public async Task<JSONAboutResponse> About()
