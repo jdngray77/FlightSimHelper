@@ -7,6 +7,9 @@ using MSFSHelper.NewViews;
 using Spectre.Console;
 using System.Diagnostics;
 using System.Text;
+using MSFSHelper;
+using Terminal.Gui;
+using YourNamespace;
 
 //Checklist afterStartChecklist = new Checklist(
 //    "AFTER START",
@@ -20,7 +23,8 @@ using System.Text;
 // ======================================================
 // Load checklists.
 // ======================================================
-
+Application.Run<Window1>().Dispose();
+return;
 
 ChecklistGroup checklists = Serialization.ChecklistsFromDataDir();
 Console.WriteLine($"Read {checklists.Checklists.Count} checklists from data directory.");
