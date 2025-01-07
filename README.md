@@ -2,7 +2,7 @@
 
 > For simulation use only.
 > 
-> Only tested with Microsoft Flight Simulator, but should be compatable with FSUIPC7 in it's different flavours.
+> Only tested with Microsoft Flight Simulator 2020, but should be compatable with FSUIPC7 in it's different flavours.
 >
 > Only comes with checklists for the FlyByWire A32NX, but checklists are fully data-driven - meaning you can create your own!
 
