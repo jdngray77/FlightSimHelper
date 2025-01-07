@@ -1,0 +1,28 @@
+﻿<View>
+
+	<h1>OverView</h1>
+
+	<p Paths="//OFP/general/flight_number,//OFP/origin/name,//OFP/destination/name,//OFP/api_params/cpt,//OFP/api_params/pid"
+	   >Flight {0} from {1} to {2} by Cpt. {3} (Pilot License No. {4})</p>
+
+	<p Paths="//OFP/aircraft/name,//OFP/aircraft/reg,//OFP/aircraft/icao_code,"
+	   >Operating aircraft is {0}, Registration {1}. ICAO {2}.
+	</p>
+
+
+	<p/>
+	<p/>
+	<p/>
+
+	<p Paths="//OFP/general/air_distance,//OFP/api_params/route">{0} mile journey via route {1}.</p>
+	<p Paths="//OFP/general/passengers">There are {0} passengers booked for the flight.</p>
+	<p Paths="//OFP/api_params/origrwy,//OFP/api_params/destrwy">Departing {0}, arriving {1}.</p>
+	<p Paths="//OFP/general/avg_wind_dir,//OFP/general/avg_wind_spd">Average wind {0}° at {1} Knts.</p>
+	<p Paths="//OFP/general/cruise_mach">Cruise speed mach {0}</p>
+
+	<p/>
+	<p Paths="//OFP/notams/rec-count">There are ~{0} NOTAMs active for this flight.</p>
+
+	<p Paths="//OFP/general/dx_rmk">Dispatcher remarks: {0}</p>
+
+</View>

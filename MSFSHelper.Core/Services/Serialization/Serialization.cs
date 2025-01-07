@@ -67,15 +67,15 @@ namespace MSFSHelper.Core.Serialization
 
         public static ChecklistGroup DeserializeChecklistGroupFromXml(string filePath)
         {
-            return DeserializeFromXml<ChecklistGroup>(filePath);
+            return DeserializeFromFile<ChecklistGroup>(filePath);
         }
 
         public static Checklist DeserializeChecklistFromXml(string filePath)
         {
-            return DeserializeFromXml<Checklist>(filePath);
+            return DeserializeFromFile<Checklist>(filePath);
         }
 
-        public static T DeserializeFromXml<T>(string filePath)
+        public static T DeserializeFromFile<T>(string filePath)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(T));
 
@@ -84,6 +84,15 @@ namespace MSFSHelper.Core.Serialization
                 var x = (T)serializer.Deserialize(fileStream);
                 (x as IPostDeserialization)?.PostDeserialize();
                 return x;
+            }
+        }
+
+        public static T DeserializeFromXml<T>(string xml)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            using (StringReader reader = new StringReader(xml))
+            {
+                return (T)serializer.Deserialize(reader);
             }
         }
     }

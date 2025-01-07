@@ -1,0 +1,16 @@
+﻿<View>
+	<h1>Crew</h1>
+	<h1>Information</h1>
+	<h1>Terminal</h1>
+
+	<p/>
+	<p/>
+	<p>
+If you're seeing this then either:
+
+	A) You've just logged into the company terminal
+or
+	B) The page you tried to open isn't working yet.
+	If this should be the case, you must notify your
+	line manager.</p>
+</View>

@@ -1,15 +1,13 @@
 ﻿using FSUIPCWebSockets.JSONDataStructures;
 using MSFSHelper.Core.Checklists;
-using MSFSHelper.Core.Checklists.ChecklistItems;
 using MSFSHelper.Core.FSUIPC;
 using MSFSHelper.Core.Serialization;
 using MSFSHelper.NewViews;
 using Spectre.Console;
-using System.Diagnostics;
-using System.Text;
 using MSFSHelper;
-using Terminal.Gui;
-using YourNamespace;
+using Avalonia;
+using Consolonia;
+using MSFSHelper.Core.Services.ViewMarkup;
 
 //Checklist afterStartChecklist = new Checklist(
 //    "AFTER START",
@@ -19,60 +17,85 @@ using YourNamespace;
 //    new StateMonitorChecklistItem("RUDDER TRIM", "ZERO", "XMLVAR_RUDDERTRIM", 0) // 0?
 //    );
 
-
 // ======================================================
-// Load checklists.
-// ======================================================
-Application.Run<Window1>().Dispose();
-return;
-
-ChecklistGroup checklists = Serialization.ChecklistsFromDataDir();
-Console.WriteLine($"Read {checklists.Checklists.Count} checklists from data directory.");
-
-
-// ======================================================
-// Connect to sim
+// Configure View
 // ======================================================
 
-FSUIPC ipc = new FSUIPC();
-
-await AnsiConsole.Status()
-    .Spinner(ConsoleScreen.GetSpinner())
-    .StartAsync("Connecting to sim...", async ctx =>
+public class Program : Application
+{
+    public static AppBuilder BuildAvaloniaApp()
     {
-        ipc.Initialize();
+        return AppBuilder.Configure<ConsoloniaApp>()
+             .UseConsolonia()
+             .UseAutoDetectedConsole()
+             .LogToException();
+    }
 
-        JSONAboutResponse s = await ipc.About().ConfigureAwait(false);
-        if (s == null)
+    public static async Task Main(string[] args)
+    {
+        //var testView = File.ReadAllText("./TestView.xml");
+        //var testData = File.ReadAllText("./data.xml");
+        //var renderer = new MarkupRenderer();
+        //var dataSource = new XmlDataSource(testData);
+        //Console.WriteLine(renderer.Render(testView, dataSource));
+        //return;
+
+        ApplicationStartup.StartWithConsoleLifetime(BuildAvaloniaApp(), args);
+
+
+        // ======================================================
+        // Load checklists.
+        // ======================================================
+
+        ChecklistGroup checklists = Serialization.ChecklistsFromDataDir();
+        Console.WriteLine($"Read {checklists.Checklists.Count} checklists from data directory.");
+
+        // ======================================================
+        // Connect to sim
+        // ======================================================
+
+        FSUIPC ipc = new FSUIPC();
+
+        await AnsiConsole.Status()
+            .Spinner(ConsoleScreen.GetSpinner())
+            .StartAsync("Connecting to sim...", async ctx =>
+            {
+                ipc.Initialize();
+
+                JSONAboutResponse s = await ipc.About().ConfigureAwait(false);
+                if (s == null)
+                {
+                    AnsiConsole.Write("!! Failed to connect. Is FSUIPC Web Socket Server running? !!");
+                    Environment.Exit(1);
+                }
+
+                Console.WriteLine($"Flight Sim : {s.data.flightSim}");
+                Console.WriteLine($"Sim Version : {s.data.flightSimVersionText}");
+                Console.WriteLine($"Sim Version Code : {s.data.flightSimVersionCode}");
+                Console.WriteLine($"FSUIPC Server Version : {s.data.FSUIPCWebSocketServerVersion}");
+                Console.WriteLine($"Wide Client : {s.data.isConnectedToWideClient}");
+                Console.WriteLine($"Connection : {s.data.isConnectionOpen}");
+            }).ConfigureAwait(false);
+
+
+        // ======================================================
+        // Define data.
+        // ======================================================
+
+        VariableGroupManager groupManager = new VariableGroupManager(ipc);
+
+        // ======================================================
+        // Define UI.
+        // ======================================================
+
+        ChecklistMenu menu = new ChecklistMenu(checklists.Checklists);
+        ConsoleScreen screen = new ConsoleScreen(menu);
+        screen.Render();
+
+        while (true)
         {
-            AnsiConsole.Write("!! Failed to connect. Is FSUIPC Web Socket Server running? !!");
-            Environment.Exit(1);
+            Thread.Sleep(10000);
         }
 
-        Console.WriteLine($"Flight Sim : {s.data.flightSim}");
-        Console.WriteLine($"Sim Version : {s.data.flightSimVersionText}");
-        Console.WriteLine($"Sim Version Code : {s.data.flightSimVersionCode}");
-        Console.WriteLine($"FSUIPC Server Version : {s.data.FSUIPCWebSocketServerVersion}");
-        Console.WriteLine($"Wide Client : {s.data.isConnectedToWideClient}");
-        Console.WriteLine($"Connection : {s.data.isConnectionOpen}");
-    }).ConfigureAwait(false);
-
-
-// ======================================================
-// Define data.
-// ======================================================
-
-VariableGroupManager groupManager = new VariableGroupManager(ipc);
-
-// ======================================================
-// Define UI.
-// ======================================================
-
-ChecklistMenu menu = new ChecklistMenu(checklists.Checklists);
-ConsoleScreen screen = new ConsoleScreen(menu);
-screen.Render();
-
-while (true)
-{
-    Thread.Sleep(10000);
+    }
 }

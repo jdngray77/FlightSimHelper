@@ -1,8 +1,5 @@
-using System.Diagnostics;
 using System.Xml.Serialization;
 using MSFSHelper.Core.SimBrief.Models;
-using System.Xml.Serialization;
-using File = MSFSHelper.Core.SimBrief.Models.File;
 
 namespace MSFSHelper;
 

@@ -9,11 +9,21 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
     <PackageReference Include="FSUIPCWebSocketClientDLL" Version="1.0.0" />
+	  <PackageReference Include="Figgle" Version="0.5.1" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="Data\Checklists\A32NX Checklists.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Markups\Plan\Overview.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Markups\Plan\TOLR.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Markups\Welcome.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

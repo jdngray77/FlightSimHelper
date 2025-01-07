@@ -1,0 +1,17 @@
+﻿<View>
+	<h1>TLR</h1>
+
+	<h3>Takeoff</h3>
+	<p Paths="//OFP/tlr/takeoff/conditions/planned_runway,//OFP/tlr/takeoff/conditions/temperature,//OFP/tlr/takeoff/conditions/surface_condition,"
+	   >Runway {0}, Temperature {1}, Surface {2}.</p>
+
+	<p Paths="//OFP/tlr/takeoff/conditions/altimiter"
+	   >Altimiter {0}.</p>
+
+	<p Paths="//OFP/tlr/takeoff/conditions/planned_weight,//OFP/params/units"
+	   >Takeoff Weight {0} {1}</p>
+	
+	<p Paths="//OFP/text/tlr_section">
+            {0}
+	</p>
+</View>
