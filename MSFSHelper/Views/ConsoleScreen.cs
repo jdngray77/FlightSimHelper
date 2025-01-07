@@ -205,10 +205,10 @@ namespace MSFSHelper.NewViews
         /// Re-renders all UI.
         /// Use sparingly, only when changes in UI are needed.
         /// </summary>
-        public void Render()
+        public Task Render()
         {
             AnsiConsole.Clear();
-            CurrentScreen.Render();
+            return CurrentScreen.Render();
         }
 
         private async Task OnScreenChanged(View oldScreen, View currentScreen)

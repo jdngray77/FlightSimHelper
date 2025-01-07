@@ -41,8 +41,10 @@ public class Program : Application
         //return;
 
         ApplicationStartup.StartWithConsoleLifetime(BuildAvaloniaApp(), args);
+    }
 
-
+    public static async Task LegacyMain()
+    {
         // ======================================================
         // Load checklists.
         // ======================================================
@@ -90,12 +92,6 @@ public class Program : Application
 
         ChecklistMenu menu = new ChecklistMenu(checklists.Checklists);
         ConsoleScreen screen = new ConsoleScreen(menu);
-        screen.Render();
-
-        while (true)
-        {
-            Thread.Sleep(10000);
-        }
-
+        await screen.Render();
     }
 }

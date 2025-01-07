@@ -1,14 +1,22 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
+using CommunityToolkit.Mvvm.Input;
 using MSFSHelper.Core.ViewModels;
+using MSFSHelper.NewViews;
 
 namespace MSFSHelper.Views.Consolonia
 {
     public partial class MainWindow : Window
     {
+        public AsyncRelayCommand ChecklistCommandTest { get; set; } = new AsyncRelayCommand(async () =>
+        {
+            await Program.LegacyMain();
+        });
+
         public MainWindow()
         {   
             InitializeComponent();
+            ChecklistMenuItem.Command = ChecklistCommandTest;
         }
 
         protected override void OnLoaded(RoutedEventArgs e)

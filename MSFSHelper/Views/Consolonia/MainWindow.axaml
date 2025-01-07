@@ -22,10 +22,15 @@
                 <MenuItem Header="_Import Flight Plan" Command="{Binding ImportFlightPlanCommand}"/>
 			</MenuItem>
 
+			<MenuItem Header="_Debug">
+				<MenuItem Header="_Checklist Test" x:Name="ChecklistMenuItem"/>
+			</MenuItem>
+
 			<MenuItem Header="_About">
 				<MenuItem Header="_Project Page" Command="{Binding ProjectPageCommand}"/>
 			</MenuItem>
-        </Menu>
+
+		</Menu>
 
 		<Grid DockPanel.Dock="Left"
 		      Width="30"
