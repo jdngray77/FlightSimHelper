@@ -2,7 +2,6 @@
 using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.Input;
 using MSFSHelper.Core.ViewModels;
-using MSFSHelper.NewViews;
 
 namespace MSFSHelper.Views.Consolonia
 {

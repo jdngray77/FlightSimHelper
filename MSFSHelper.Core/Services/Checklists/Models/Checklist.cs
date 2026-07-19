@@ -99,7 +99,6 @@ namespace MSFSHelper.Core.Checklists
                 else
                 {
                     Console.WriteLine($"No LVar found for Checklist Item {item.Name}");
-
                 }
             }
         }

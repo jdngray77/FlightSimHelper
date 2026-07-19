@@ -9,6 +9,9 @@ namespace MSFSHelper.Core.Checklists
     {
         [XmlArray]
         public List<Checklist> Checklists { get; set; } = new List<Checklist>();
+        
+        [XmlAttribute]
+        public string Name { get; set; }
 
         public ChecklistGroup() { }
 

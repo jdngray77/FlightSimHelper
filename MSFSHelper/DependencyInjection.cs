@@ -1,5 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
+using MSFSHelper.Core.FSUIPC;
+using MSFSHelper.Core.Services;
+using MSFSHelper.Core.Services.Checklists;
 using MSFSHelper.Core.Services.Navigation;
 using MSFSHelper.Core.Services.SimBrief;
 using MSFSHelper.Core.Services.ViewMarkup;
@@ -28,6 +31,7 @@ namespace MSFSHelper
         private void ConfigureViews()
         {
             services.AddSingleton<Views.Consolonia.MarkupView>();
+            services.AddTransient<Views.Consolonia.ChecklistView>();
         }
 
         private void ConfigureViewModels()
@@ -43,7 +47,9 @@ namespace MSFSHelper
             services.AddSingleton<SimBriefService>();
             services.AddSingleton<INavigationServices, ConsoloniaNavigationService>();
             services.AddSingleton<MarkupRenderer>();
-
+            services.AddSingleton<ChecklistLoadService>();
+            services.AddSingleton<FSUIPC>();
+            services.AddSingleton<StartupService>();
         }
 
         private void ConfigureFactories()

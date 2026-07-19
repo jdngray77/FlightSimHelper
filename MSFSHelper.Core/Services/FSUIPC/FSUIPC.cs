@@ -1,6 +1,7 @@
 ﻿using FSUIPCWebSockets.Client;
 using FSUIPCWebSockets.JSONDataStructures;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 
 namespace MSFSHelper.Core.FSUIPC
 {
@@ -23,7 +24,7 @@ namespace MSFSHelper.Core.FSUIPC
 
         public FSUIPC()
         {
-            Address = "ws://192.168.0.13:2048/fsuipc/";
+            Address = "ws://localhost:2048/fsuipc/";
             TimeoutMillis = 10000;
         }
 
@@ -295,7 +296,7 @@ namespace MSFSHelper.Core.FSUIPC
 
         private void Log(string message)
         {
-            //Console.WriteLine($"[WS] {message}");
+            Debug.WriteLine($"[WS] {message}");
         }
 
         public void Dispose()

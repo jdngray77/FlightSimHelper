@@ -6,6 +6,7 @@ using MSFSHelper.Core.Services.Navigation;
 using MSFSHelper.Core.Services.SimBrief;
 using System.Collections.ObjectModel;
 using System.Timers;
+using MSFSHelper.Core.Services.Checklists;
 
 namespace MSFSHelper.Core.ViewModels
 {
@@ -15,6 +16,7 @@ namespace MSFSHelper.Core.ViewModels
         private readonly INavigationServices navigation;
         private readonly SimBriefService simBrief;
         private readonly IMessenger messenger;
+        private readonly FSUIPC.FSUIPC ipc;
 
         public ObservableCollection<MenuViewModel> Menus { get; }
 
@@ -28,11 +30,14 @@ namespace MSFSHelper.Core.ViewModels
         public MainViewModel(
             INavigationServices navigation, 
             SimBriefService simBrief, 
-            IMessenger messenger)
+            IMessenger messenger,
+            ChecklistLoadService checklistLoadService, 
+            FSUIPC.FSUIPC ipc)
         {
             this.navigation = navigation;
             this.simBrief = simBrief;
             this.messenger = messenger;
+            this.ipc = ipc;
 
             messenger.Register<AppStatusMessage>(this);
             statusMessageClearTimer.Elapsed += Timer_Elapsed;
@@ -60,18 +65,7 @@ namespace MSFSHelper.Core.ViewModels
 
             // TODO this should be data driven.
             new MenuViewModel("Checklists",
-                new MenuItemViewModel("Pre-Start", ERoutes.Checklist),
-                new MenuItemViewModel("Pushback", ERoutes.Checklist),
-                new MenuItemViewModel("Start-up", ERoutes.Checklist),
-                new MenuItemViewModel("Taxi", ERoutes.Checklist),
-                new MenuItemViewModel("Before Take-Off", ERoutes.Checklist),
-                new MenuItemViewModel("After Take-Off", ERoutes.Checklist),
-                new MenuItemViewModel("Climb", ERoutes.Checklist),
-                new MenuItemViewModel("Cruze", ERoutes.Checklist),
-                new MenuItemViewModel("Descent", ERoutes.Checklist),
-                new MenuItemViewModel("Approach", ERoutes.Checklist),
-                new MenuItemViewModel("After Touch-Down", ERoutes.Checklist),
-                new MenuItemViewModel("Shutdown", ERoutes.Checklist)
+                CreateChecklistItems(checklistLoadService, ipc)
             ),
 
             new MenuViewModel("Settings",
@@ -156,6 +150,15 @@ namespace MSFSHelper.Core.ViewModels
         void IRecipient<AppStatusMessage>.Receive(AppStatusMessage message)
         {
             StatusMessage = message.Value;
+        }
+
+        private static MenuItemViewModel[] CreateChecklistItems(ChecklistLoadService service, FSUIPC.FSUIPC ipc)
+        {
+            return service.ChecklistGroups.SelectMany(
+                group => group.Checklists.Select(
+                    checklist => new ChecklistViewModel($"({group.Name}) - {checklist.Name}", checklist, ipc)
+                    )
+                ).ToArray<MenuItemViewModel>();
         }
     }
 }

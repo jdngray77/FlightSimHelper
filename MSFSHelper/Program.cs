@@ -31,6 +31,7 @@ public class Program : Application
              .LogToException();
     }
 
+
     public static async Task Main(string[] args)
     {
         //var testView = File.ReadAllText("./TestView.xml");

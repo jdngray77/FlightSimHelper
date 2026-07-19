@@ -18,6 +18,7 @@ namespace MSFSHelper
             Views = new Dictionary<ERoutes, Lazy<Control>>
             {
                 { ERoutes.MarkupView, new Lazy<Control>(LoadView<Views.Consolonia.MarkupView>) },
+                { ERoutes.Checklist, new Lazy<Control>(LoadView<ChecklistView>) },
             };
         }
 

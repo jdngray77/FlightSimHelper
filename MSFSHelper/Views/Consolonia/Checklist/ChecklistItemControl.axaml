@@ -1,0 +1,23 @@
+<UserControl
+		xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:checklistVMs="clr-namespace:MSFSHelper.Core.ViewModels.Checklist;assembly=MSFSHelper.Core"
+        xmlns:converters="clr-namespace:MSFSHelper.Converters"
+        mc:Ignorable="d"
+        x:Class="MSFSHelper.Views.Consolonia.ChecklistItemControl"
+		x:DataType="checklistVMs:ChecklistEntryViewModel">
+	<UserControl.Resources>
+		<converters:StateToColorConverter x:Key="StateToColorConverter"/>
+	</UserControl.Resources>
+	
+	<StackPanel Orientation="Horizontal">
+			<Grid ColumnDefinitions="*,*,*" Width="100">
+				<Label Grid.Column="0"
+				       Content="{Binding Name}" Foreground="{Binding State, Converter={StaticResource StateToColorConverter}}"/>
+				<Label Grid.Column="1" Content="{Binding Action}"/>
+				<Label Grid.Column="2" Content="{Binding Notes}"/>
+			</Grid>
+		</StackPanel>
+</UserControl>

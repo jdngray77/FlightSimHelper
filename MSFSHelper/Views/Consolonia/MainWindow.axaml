@@ -33,7 +33,7 @@
 		</Menu>
 
 		<Grid DockPanel.Dock="Left"
-		      Width="30"
+		      Width="50"
 			  RowDefinitions="*,Auto">
 
 			<TabControl TabStripPlacement="Top" ItemsSource="{Binding Menus}">
