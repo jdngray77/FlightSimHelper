@@ -10,13 +10,46 @@
 			<ListBox 
 				ItemsSource="{Binding Items}" 
 			    SelectedItem="{Binding SelectedItem}"
-				SelectionMode="Single"
-				IsHitTestVisible="False">
+				SelectedIndex="{Binding SelectedIndex}"
+				SelectionMode="Single">
 				<ListBox.ItemTemplate>
 					<DataTemplate>
 						<consolonia:ChecklistItemControl DataContext="{Binding}"/>
 					</DataTemplate>
 				</ListBox.ItemTemplate>
 			</ListBox>
+			
+			<Grid Grid.Row="1" Grid.ColumnDefinitions="*, Auto">
+				<StackPanel Grid.Column="0"  Orientation="Horizontal">
+					<ToolTip Tip="Marks the currently highlighted item as complete and proceeds.">
+						<Button Content="MANUAL CONFIRM"  
+						        Command="{Binding ManualMarkCurrentCompleteCommand}"
+						        Background="Transparent"
+						        Foreground="Green"
+						/>
+
+					</ToolTip>
+				
+					<Button Content="RESET CHECKLIST"  
+					        Command="{Binding ResetChecklistCommand}"
+					        Background="Transparent"
+					        Foreground="Red"
+					/>
+				</StackPanel>
+				
+				<StackPanel Grid.Column="1">
+					<ProgressBar Minimum="0" Maximum="{Binding Items.Count}" Value="{Binding SelectedIndex}">
+						
+					</ProgressBar>
+					<Label>
+						<Label.Content>
+							<MultiBinding StringFormat="[ {0} / {1} ]">
+								<Binding Path="SelectedIndex"/>
+								<Binding Path="Items.Count"/>
+							</MultiBinding>
+						</Label.Content>
+					</Label>
+				</StackPanel>
+			</Grid>
 		</Grid>
 </UserControl>

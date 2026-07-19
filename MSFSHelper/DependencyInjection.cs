@@ -9,6 +9,7 @@ using MSFSHelper.Core.Services.ViewMarkup;
 using MSFSHelper.Core.Services.ViewMarkup.Model;
 using MSFSHelper.Core.ViewModels;
 using MSFSHelper.Core.ViewModels.Plan;
+using MSFSHelper.Services;
 
 namespace MSFSHelper
 {
@@ -50,6 +51,7 @@ namespace MSFSHelper
             services.AddSingleton<ChecklistLoadService>();
             services.AddSingleton<FSUIPC>();
             services.AddSingleton<StartupService>();
+            services.AddSingleton<IAlertService, AlertService>();
         }
 
         private void ConfigureFactories()

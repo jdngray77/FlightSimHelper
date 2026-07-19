@@ -10,14 +10,38 @@
 		x:DataType="checklistVMs:ChecklistEntryViewModel">
 	<UserControl.Resources>
 		<converters:StateToColorConverter x:Key="StateToColorConverter"/>
+		<converters:SelectedChecklistItemTextConverter x:Key="SelectedChecklistItemTextConverter"/>
 	</UserControl.Resources>
-	
-	<StackPanel Orientation="Horizontal">
-			<Grid ColumnDefinitions="*,*,*" Width="100">
-				<Label Grid.Column="0"
-				       Content="{Binding Name}" Foreground="{Binding State, Converter={StaticResource StateToColorConverter}}"/>
-				<Label Grid.Column="1" Content="{Binding Action}"/>
-				<Label Grid.Column="2" Content="{Binding Notes}"/>
-			</Grid>
-		</StackPanel>
+
+		<Grid ColumnDefinitions="*,*,*" MinWidth="150" HorizontalAlignment="Stretch">
+			<Label Grid.Column="0"
+			       Classes.Selected="{Binding Selected}"
+			       Foreground="{Binding State, Converter={StaticResource StateToColorConverter}}">
+				<Label.Content>
+					<MultiBinding Converter="{StaticResource SelectedChecklistItemTextConverter}">
+						<Binding Path="Name"/>
+						<Binding Path="Selected"/>
+					</MultiBinding>
+				</Label.Content>
+			</Label>
+			
+			<Label Grid.Column="1" 
+			       Foreground="{Binding State, Converter={StaticResource StateToColorConverter}}">
+				<Label.Content>
+					<MultiBinding Converter="{StaticResource SelectedChecklistItemTextConverter}">
+						<Binding Path="Action"/>
+						<Binding Path="Selected"/>
+					</MultiBinding>
+				</Label.Content>
+			</Label>
+			
+			<Label Grid.Column="2">
+				<Label.Content>
+					<MultiBinding Converter="{StaticResource SelectedChecklistItemTextConverter}">
+						<Binding Path="Notes"/>
+						<Binding Path="Selected"/>
+					</MultiBinding>
+				</Label.Content>
+			</Label>
+		</Grid>
 </UserControl>

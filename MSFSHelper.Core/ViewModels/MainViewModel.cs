@@ -6,6 +6,7 @@ using MSFSHelper.Core.Services.Navigation;
 using MSFSHelper.Core.Services.SimBrief;
 using System.Collections.ObjectModel;
 using System.Timers;
+using MSFSHelper.Core.Services;
 using MSFSHelper.Core.Services.Checklists;
 
 namespace MSFSHelper.Core.ViewModels
@@ -32,7 +33,8 @@ namespace MSFSHelper.Core.ViewModels
             SimBriefService simBrief, 
             IMessenger messenger,
             ChecklistLoadService checklistLoadService, 
-            FSUIPC.FSUIPC ipc)
+            FSUIPC.FSUIPC ipc,
+            IAlertService alertService)
         {
             this.navigation = navigation;
             this.simBrief = simBrief;
@@ -65,7 +67,16 @@ namespace MSFSHelper.Core.ViewModels
 
             // TODO this should be data driven.
             new MenuViewModel("Checklists",
-                CreateChecklistItems(checklistLoadService, ipc)
+                checklistLoadService.ChecklistGroups.SelectMany(
+                group => group.Checklists.Select(
+                    checklist => new ChecklistViewModel(
+                        $"({group.Name}) - {checklist.Name}",
+                        checklist,
+                        ipc,
+                        navigation,
+                        alertService)
+                    )
+                ).ToArray<MenuItemViewModel>()
             ),
 
             new MenuViewModel("Settings",
@@ -150,15 +161,6 @@ namespace MSFSHelper.Core.ViewModels
         void IRecipient<AppStatusMessage>.Receive(AppStatusMessage message)
         {
             StatusMessage = message.Value;
-        }
-
-        private static MenuItemViewModel[] CreateChecklistItems(ChecklistLoadService service, FSUIPC.FSUIPC ipc)
-        {
-            return service.ChecklistGroups.SelectMany(
-                group => group.Checklists.Select(
-                    checklist => new ChecklistViewModel($"({group.Name}) - {checklist.Name}", checklist, ipc)
-                    )
-                ).ToArray<MenuItemViewModel>();
         }
     }
 }

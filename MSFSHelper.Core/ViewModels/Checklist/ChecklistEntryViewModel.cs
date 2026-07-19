@@ -11,6 +11,9 @@ public partial class ChecklistEntryViewModel
     [ObservableProperty]
     private ChecklistItemState state;
 
+    [ObservableProperty] 
+    private bool selected = false;
+
     public string Name => _entry.Name;
     public string Action => _entry.Action;
     public string? Notes => _entry.Notes;
@@ -19,6 +22,11 @@ public partial class ChecklistEntryViewModel
     {
         _entry = entry;
         state = entry.State;
+    }
+
+    public virtual void Reset()
+    {
+        
     }
 
     /// <summary>

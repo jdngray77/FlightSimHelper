@@ -10,7 +10,7 @@ namespace MSFSHelper.Core.FSUIPC
 
         public string GroupName { get; init; }
 
-        private Dictionary<string, DoubleVar> Variables { get; }
+        public Dictionary<string, DoubleVar> Variables { get; }
 
         public event EventHandler Updated;
         

@@ -9,14 +9,15 @@
 				<StateMonitorChecklistItem Name="PRK BRK" Action="ON" VariableName="A32NX_PARK_BRAKE_LEVER_POS" RequiredValue="1"/>
 				<StateMonitorChecklistItem Name="SPD BRK" Action="CHECK RET" VariableName="A32NX_SPOILERS_HANDLE_POSITION" RequiredValue="0"/>
 				<StateMonitorChecklistItem Name="FLAPS" Action="CHECK RET" VariableName="A32NX_FLAPS_HANDLE_INDEX" RequiredValue="0"/>
-				<StateMonitorChecklistItem Name="RX RADAR SYS" Action="OFF" VariableName="XMLVAR_A320_WEATHERRADAR_SYS" RequiredValue="0" Notes="[gray](inop)[/]"/>
+				<StateMonitorChecklistItem Name="RX RADAR SYS" Action="OFF" VariableName="XMLVAR_A320_WeatherRadar_Sys" RequiredValue="1"/>
 				<StateMonitorChecklistItem Name="ENG MASTER 1" Action="OFF" VariableName="FUELSYSTEM VALVE SWITCH:1" DataOffset="0x66CB" RequiredValue="0"/>
 				<StateMonitorChecklistItem Name="ENG MASTER 2" Action="OFF" VariableName="FUELSYSTEM VALVE SWITCH:2" DataOffset="0x66CC" RequiredValue="0"/>
-				<StateMonitorChecklistItem Name="ENG MODE SEL" Action="NORM" VariableName="TURB ENG IGNITION SWITCH EX1:1" DataOffset="0x66CA" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="ENG MODE SEL" Action="NORM" VariableName="XMLVAR_ENG_MODE_SEL" RequiredValue="1"/>
 				
 				<!-- TODO CONFIRM -->
-				<InformationalChecklistItem Name="THRUST LVRS" Action="IDLE"/>
-				<StateMonitorChecklistItem Name="L/G LVR" Action="DOWN" VariableName="GEAR HANDLE POSITION" RequiredValue="0"/>
+				<StateMonitorChecklistItem Name="THRUST ENG 1" Action="IDLE" VariableName="A32NX_3D_THROTTLE_LEVER_POSITION_1" RequiredValue="25"/>
+				<StateMonitorChecklistItem Name="THRUST ENG 2" Action="IDLE" VariableName="A32NX_3D_THROTTLE_LEVER_POSITION_2" RequiredValue="25"/>
+				<StateMonitorChecklistItem Name="L/G LVR" Action="DOWN" VariableName="A32NX_GEAR_HANDLE_POSITION" RequiredValue="1"/>
 				<StateMonitorChecklistItem Name="WIPERS L" Action="OFF" VariableName="CIRCUIT SWITCH ON:77" DataOffset="0x66D2" RequiredValue="0"/>
 				<StateMonitorChecklistItem Name="WIPERS R" Action="OFF" VariableName="CIRCUIT SWITCH ON:80" DataOffset="0x66D4" RequiredValue="0"/>
 				
@@ -24,7 +25,7 @@
 				<StateMonitorChecklistItem Name="Battery 1" Action="SET AUTO" VariableName="A32NX_OVHD_ELEC_BAT_1_PB_IS_AUTO" RequiredValue="1"/>
 				<StateMonitorChecklistItem Name="Battery 2" Action="SET AUTO" VariableName="A32NX_OVHD_ELEC_BAT_2_PB_IS_AUTO" RequiredValue="1"/>
 			
-				<StateMonitorChecklistItem Name="EXT PWR" Action="ON" VariableName="EXTERNAL POWER ON" RequiredValue="0" Notes="[gray](inop)[/]"/>
+				<StateMonitorChecklistItem Name="EXT PWR" Action="ON" VariableName="A32NX_OVHD_ELEC_EXT_PWR_PB_IS_ON" RequiredValue="1" Notes="SKIP IF NOT AVAIL"/>
 				
 				<StateMonitorChecklistItem Name="APU FIRE TEST" Action="PERFORM" VariableName="A32NX_FIRE_TEST_APU" Latching="true" RequiredValue="1"/>
 				<StateMonitorChecklistItem Name="APU MASTER" Action="ON" VariableName="A32NX_OVHD_APU_MASTER_SW_PB_IS_ON" RequiredValue="1"/>
@@ -32,10 +33,10 @@
 				
 
 				<InformationalChecklistItem Name="INT LIGHTS" Action="AS RQRD" />
-				<StateMonitorChecklistItem Name="NAV &amp; LOGO LIGHTS" Action="ON" VariableName="LIGHT NAV" RequiredValue="0"  Notes="[gray](inop)[/]"/>
-				<StateMonitorChecklistItem Name="STROBE LIGHT" Action="ON" VariableName="LIGHT STROBE" RequiredValue="0"  Notes="[gray](inop)[/]"/>
+				<StateMonitorChecklistItem Name="NAV &amp; LOGO LIGHTS" Action="ON" VariableName="LIGHT NAV" DataOffset="0x66E5" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="STROBE LIGHT" Action="ON" VariableName="LIGHTING_STROBE_0" RequiredValue="0"/>
 				
-				<StateMonitorChecklistItem Name="ECAM RCL" Action="PRESS" VariableName="A32NX_BTN_RCL" Latching="true" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="ECAM RCL" Action="PRESS" VariableName="A32NX_ECP_DISCRETE_OUT_RCL" Latching="true" RequiredValue="1"/>
 				<InformationalChecklistItem Name="OIL QTY" Action="CHECK" />
 				<InformationalChecklistItem Name="ACCU BRK PRESSURE" Action="CHECK" />
 				<StateMonitorChecklistItem Name="RAIN REPEL L" Action="PRESS" VariableName="A32NX_RAIN_REPELLENT_LEFT_ON" Latching="true" RequiredValue="1"/>
@@ -45,39 +46,41 @@
 				<StateMonitorChecklistItem Name="PACK 1" Action="ON" VariableName="A32NX_OVHD_COND_PACK_1_PB_IS_ON" RequiredValue="1"/>
 				<StateMonitorChecklistItem Name="PACK 2" Action="ON" VariableName="A32NX_OVHD_COND_PACK_2_PB_IS_ON" RequiredValue="1"/>
 
-				<StateMonitorChecklistItem Name="CREW SUPPLY" Action="ON" VariableName="PUSH_OVHD_OXYGEN_CREW" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="CREW SUPPLY" Action="ON" VariableName="PUSH_OVHD_OXYGEN_CREW" RequiredValue="0"/>
 				
 				<StateMonitorChecklistItem Name="ADIR 1" Action="NAV" VariableName="A32NX_OVHD_ADIRS_IR_1_MODE_SELECTOR_KNOB" RequiredValue="1"/>
 				<StateMonitorChecklistItem Name="ADIR 2" Action="NAV" VariableName="A32NX_OVHD_ADIRS_IR_2_MODE_SELECTOR_KNOB" RequiredValue="1"/>
 				<StateMonitorChecklistItem Name="ADIR 3" Action="NAV" VariableName="A32NX_OVHD_ADIRS_IR_3_MODE_SELECTOR_KNOB" RequiredValue="1"/>
 				
-				<StateMonitorChecklistItem Name="FUEL QTY" Action="CHECK / UPLOAD" VariableName="A32NX_ECAM_SD_CURRENT_PAGE_INDEX" RequiredValue="5" Latching="true"/>
+				<StateMonitorChecklistItem Name="FUEL QTY" Action="CHECK / UPLOAD" VariableName="A32NX_ECAM_SD_CURRENT_PAGE_INDEX" RequiredValue="5" Latching="true" Notes="(View ECAM FUEL page.)"/>
 				
 				<StateMonitorChecklistItem Name="SEAT BELTS" Action="ON" VariableName="CABIN SEATBELTS ALERT SWITCH" DataOffset="0x66CD" RequiredValue="1"/>
-				<InformationalChecklistItem Name="SMOKING SIGN" Action="AUTO"/> <!-- inop VariableName="XMLVAR_SWITCH_OVHD_INTLT_NOSMOKING_Position" RequiredValue="1" -->
-				<InformationalChecklistItem Name="EMER EXIT LT" Action="AUTO"/> <!-- inop VariableName="XMLVAR_SWITCH_OVHD_INTLT_EMEREXIT_POSITION" RequiredValue="1" -->
+				<StateMonitorChecklistItem Name="SMOKING / NO PED" VariableName="XMLVAR_SWITCH_OVHD_INTLT_NOSMOKING_Position" RequiredValue="1" Action="AUTO"/>
+				<StateMonitorChecklistItem Name="EMER EXIT LT" VariableName="XMLVAR_SWITCH_OVHD_INTLT_EMEREXIT_Position" RequiredValue="1" Action="AUTO"/>
 				
-				<InformationalChecklistItem Name="CABIN ELEVATION" Action="CHECK AUTO" /> <!-- manual check -->
+				<StateMonitorChecklistItem Name="CABIN ELEVATION" Action="AUTO" VariableName="A32NX_OVHD_PRESS_MODE_SEL_PB_IS_AUTO" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="LANDING ELEVATION" Action="AUTO" VariableName="A32NX_OVHD_PRESS_LDG_ELEV_KNOB" RequiredValue="-4000"/>
 
-				<InformationalChecklistItem Name="CABIN TEMPERATURE" Action="CHECK" /> <!-- manual check -->
+				<InformationalChecklistItem Name="CABIN TEMPERATURE" Action="AS REQ" />
 
-				<StateMonitorChecklistItem Name="FUEL PMP L 1" Action="ON" VariableName="FUELSYSTEM PUMP SWITCH:2" RequiredValue="0"  Notes="[gray](inop)[/]"/>
-				<StateMonitorChecklistItem Name="FUEL PMP L 2" Action="ON" VariableName="FUELSYSTEM PUMP SWITCH:5" RequiredValue="0"  Notes="[gray](inop)[/]"/>
-				<StateMonitorChecklistItem Name="FUEL PMP C 1" Action="ON" VariableName="FUELSYSTEM PUMP SWITCH:9" RequiredValue="0"  Notes="[gray](inop)[/]"/>
-				<StateMonitorChecklistItem Name="FUEL PMP C 2" Action="ON" VariableName="FUELSYSTEM PUMP SWITCH:10" RequiredValue="0"  Notes="[gray](inop)[/]"/>
-				<StateMonitorChecklistItem Name="FUEL PMP R 1" Action="ON" VariableName="FUELSYSTEM PUMP SWITCH:3" RequiredValue="0"  Notes="[gray](inop)[/]"/>
-				<StateMonitorChecklistItem Name="FUEL PMP R 2" Action="ON" VariableName="FUELSYSTEM PUMP SWITCH:6" RequiredValue="0"  Notes="[gray](inop)[/]"/>
+				<StateMonitorChecklistItem Name="FUEL PMP L 1" Action="ON" VariableName="FUELSYSTEM PUMP SWITCH:2" DataOffset="0x66C6" RequiredValue="0"/>
+				<StateMonitorChecklistItem Name="FUEL PMP L 2" Action="ON" VariableName="FUELSYSTEM PUMP SWITCH:5" DataOffset="0x66C9" RequiredValue="0"/>
+				<StateMonitorChecklistItem Name="FUEL TK L XTR" Action="ON" VariableName="FUELSYSTEM PUMP SWITCH:9" DataOffset="0x66C5" RequiredValue="0"/>
+				<StateMonitorChecklistItem Name="FUEL TK R XTR" Action="ON" VariableName="FUELSYSTEM PUMP SWITCH:10" DataOffset="0x66C8" RequiredValue="0"/>
+				<StateMonitorChecklistItem Name="FUEL PMP R 1" Action="ON" VariableName="FUELSYSTEM PUMP SWITCH:3" DataOffset="0x66C7" RequiredValue="0"/>
+				<StateMonitorChecklistItem Name="FUEL PMP R 2" Action="ON" VariableName="FUELSYSTEM PUMP SWITCH:6" DataOffset="0x66D0" RequiredValue="0"/>
 				
-				<InformationalChecklistItem Name="FMGS / CDU" Action="DASHED" />
-				<StateMonitorChecklistItem Name="ALTIMETERS" Action="SET QNH" VariableName="XMLVAR_Baro1_Mode" RequiredValue="1"/>
+				<InformationalChecklistItem Name="FMGS / CDU " Action="DASHED" Notes="Verify MCDU shows no residual data from last flight."/>
 				
-				<StateMonitorChecklistItem Name="DOORS" Action="CHECK" VariableName="A32NX_ECAM_SD_CURRENT_PAGE_INDEX" RequiredValue="8" Latching="true"/>
+				<StateMonitorChecklistItem Name="ALTIMETERS" Action="SET QNH" VariableName="XMLVAR_Baro1_Mode" RequiredValue="1" Notes="Ensure EFIS does not display STD"/>
+				
+				<StateMonitorChecklistItem Name="DOORS" Action="CHECK" VariableName="A32NX_ECAM_SD_CURRENT_PAGE_INDEX" RequiredValue="8" Latching="true" Notes="(View ECAM DOOR page.)"/>
 			
 				<InformationalChecklistItem Name="RADIO ACTIVE" Action="SET TO ATIS"/>
 				<InformationalChecklistItem Name="RADIO STBY" Action="SET TO GROUND"/>
 				
-				<StateMonitorChecklistItem Name="FLIGHT DIR" Action="ON" VariableName="AUTOPILOT FLIGHT DIRECTOR ACTIVE" RequiredValue="0" Notes="[gray](inop)[/]"/>
-				
+				<StateMonitorChecklistItem Name="FLIGHT DIR (CAPT.)" Action="ON" VariableName="A32NX_FCU_EFIS_L_FD_LIGHT_ON" RequiredValue="1"/>
+				<StateMonitorChecklistItem Name="FLIGHT DIR (F/O)" Action="ON" VariableName="A32NX_FCU_EFIS_R_FD_LIGHT_ON" RequiredValue="1"/>
 				
 			</Items>
 		</Checklist>
@@ -360,7 +363,7 @@
 			
 				<StateMonitorChecklistItem Name="AP 1" Action="ENGAGE" VariableName="A32NX_AUTOPILOT_1_ACTIVE" RequiredValue="1" Latching="true"/>
 			
-				<StateMonitorChecklistItem Name="FLAPS" Action="RETRACT" VariableName="	A32NX_FLAPS_HANDLE_INDEX" RequiredValue="0"
+				<StateMonitorChecklistItem Name="FLAPS" Action="RETRACT" VariableName="A32NX_FLAPS_HANDLE_INDEX" RequiredValue="0"
 										   Notes="First, Retract at 'S' speed. Then at 'F' speed until flaps 0."/>
 			
 			

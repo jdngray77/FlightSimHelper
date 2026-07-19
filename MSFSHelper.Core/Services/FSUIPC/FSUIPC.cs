@@ -18,14 +18,13 @@ namespace MSFSHelper.Core.FSUIPC
         private Dictionary<string, ResponseHandler> responseHandlers = new();
 
 
-        public string Address { get; init; } 
-        public int TimeoutMillis { get; set; }
+        public string Address { get; init; }
+        public const int TimeoutMillis = 10000;
 
 
         public FSUIPC()
         {
             Address = "ws://localhost:2048/fsuipc/";
-            TimeoutMillis = 10000;
         }
 
         public void Initialize()
@@ -92,7 +91,7 @@ namespace MSFSHelper.Core.FSUIPC
                 interval = intervalMillis
             };
 
-            var response = ConvertResponse.offsets.read(await SendAndAwait(request).ConfigureAwait(false));
+            var response = ConvertResponse.offsets.read(await SendAndAwait(request, 500).ConfigureAwait(false));
             lock (responseHandlers)
             {
                 responseHandlers.Add(varGroupName, new ResponseHandler(onUpdate, false));
@@ -114,6 +113,9 @@ namespace MSFSHelper.Core.FSUIPC
 
         public async Task<JSONResponse> DeclareVariableGroup(string varGroupName, params string[] declarations)
         {
+            // Strip duplicates.
+            declarations = declarations.Distinct().ToArray();
+            
             VarDefinition[] varsNames = declarations.Select(it => new VarDefinition { name = it }).ToArray();
 
             JSONRequest request = new JSONVarsRequest
@@ -200,7 +202,7 @@ namespace MSFSHelper.Core.FSUIPC
             return ConvertResponse.about.read(await SendAndAwait(request));
         }
 
-        private async Task<JSONResponse?> SendAndAwait(JSONRequest request)
+        public async Task<JSONResponse?> SendAndAwait(JSONRequest request, int timeoutMillis = TimeoutMillis)
         {
             SemaphoreSlim semaphoreSlim = new SemaphoreSlim(0, 1);
 
@@ -212,7 +214,7 @@ namespace MSFSHelper.Core.FSUIPC
                 semaphoreSlim.Release();
             });
 
-            Task<bool> task = semaphoreSlim.WaitAsync(TimeoutMillis);
+            Task<bool> task = semaphoreSlim.WaitAsync(timeoutMillis);
             await task.ConfigureAwait(false);
 
             if (!task.Result)
@@ -227,7 +229,7 @@ namespace MSFSHelper.Core.FSUIPC
         {
             string identifier = string.IsNullOrEmpty(request.name) ?
                 Guid.NewGuid().ToString() : request.name;
-
+            
             request.name = identifier;
 
             lock (responseHandlers)

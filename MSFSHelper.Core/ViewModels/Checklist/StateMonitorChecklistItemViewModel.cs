@@ -1,4 +1,5 @@
 using MSFSHelper.Core.Checklists.ChecklistItems;
+using MSFSHelper.Core.FSUIPC;
 
 namespace MSFSHelper.Core.ViewModels.Checklist;
 
@@ -9,6 +10,16 @@ public partial class StateMonitorChecklistItemViewModel : ChecklistEntryViewMode
     public string VariableName => _item.VariableName;
     public ChecklistDataType DataType => _item.DataType;
     public bool Latching => _item.Latching;
+
+    public override void Reset()
+    {
+        base.Reset();
+
+        if (Latching)
+        {
+            State = ChecklistItemState.Unchecked;
+        }
+    }
 
     public StateMonitorChecklistItemViewModel(StateMonitorChecklistItem item) : base(item)
     {
