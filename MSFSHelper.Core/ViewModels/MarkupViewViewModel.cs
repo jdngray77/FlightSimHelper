@@ -19,7 +19,7 @@ namespace MSFSHelper.Core.ViewModels
         public async Task Render(string viewPath, Func<Task<String>> lazyData)
         {
             var viewMarkup = await File.ReadAllTextAsync(viewPath).ConfigureAwait(false);
-            var data = File.ReadAllText("./data.xml"); //await lazyData().ConfigureAwait(false);
+            var data = File.ReadAllText("./dummySimBriefData.xml"); //await lazyData().ConfigureAwait(false);
 
             var DataSource = new XmlDataSource(data);
             Text = markupRenderer.Render(viewMarkup, DataSource);

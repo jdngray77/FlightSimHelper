@@ -4,7 +4,6 @@ using Avalonia.Threading;
 using Consolonia;
 using Consolonia.Themes;
 using Microsoft.Extensions.DependencyInjection;
-using MSFSHelper.Core.FSUIPC;
 using MSFSHelper.Core.Services;
 using MSFSHelper.Core.ViewModels;
 using MainWindow = MSFSHelper.Views.Pages.MainWindow;
@@ -34,13 +33,13 @@ namespace MSFSHelper
 
             Task.Run(async () =>
             {
-                StartupService startupService = DI.GetRequiredService<StartupService>();
-                startupService.Startup().Wait();
+                LifetimeService lifetimeService = DI.GetRequiredService<LifetimeService>();
+                lifetimeService.Startup().Wait();
             
                 // DI the primary view model.
                 // Avalonia's di support is a bit crap.
                 this.MainWindow = ((base.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow as MainWindow);
-                MainViewModel vm = DI.GetRequiredService<MainViewModel>();
+                MainWindowViewModel vm = DI.GetRequiredService<MainWindowViewModel>();
 
                 vm.SelectedMenuItem = new MarkupMenuItemViewModel("./Data/Markups/Welcome.xml", null, "Welcome");
 

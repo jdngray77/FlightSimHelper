@@ -10,7 +10,9 @@ namespace MSFSHelper
     internal class ConsoloniaNavigationService : INavigationServices
     {
         private readonly ViewFactory viewFactory;
-
+        private Control? currentView = null;
+        
+        
         public ConsoloniaNavigationService(ViewFactory viewFactory)
         {
             this.viewFactory = viewFactory;
@@ -18,21 +20,30 @@ namespace MSFSHelper
 
         public async Task GotoAsync(ERoutes route, Dictionary<string, object>? data = null)
         {
-            Control view = null;
+            Control nextView = null;
+
+            if (currentView != null && currentView is INavigateFrom from)
+            {
+                await from.NavigatedFrom().ConfigureAwait(false);
+            }
+            
             await Dispatcher.UIThread.InvokeAsync(() =>
             {
-                view = viewFactory.GetView(route);
+                nextView = viewFactory.GetView(route);
 
                 var lifetime = (Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime);
                 var MainWindow = (lifetime.MainWindow as MainWindow);
 
-                MainWindow.MainContentPanel.Child = view;
+                MainWindow.MainContentPanel.Child = nextView;
             });
 
-            if (view is IPostNavigate && data != null)
+            if (nextView is INavigateTo && data != null)
             {
-                await (view as IPostNavigate).AfterNavigatingTo(data).ConfigureAwait(false);
+                await (nextView as INavigateTo).AfterNavigatingTo(data).ConfigureAwait(false);
             }
+            
+            currentView = nextView;
+            
         }
     }
 }

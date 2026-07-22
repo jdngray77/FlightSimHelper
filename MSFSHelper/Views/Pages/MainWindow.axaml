@@ -6,27 +6,12 @@
         Title=" Flight Crew Information Terminal"
         x:Class="MSFSHelper.Views.Pages.MainWindow"
 		x:Name="Window"
-        xmlns:vm="clr-namespace:MSFSHelper.Core.ViewModels;assembly=MSFSHelper.Core">
+        x:DataType="vm:MainWindowViewModel"
+        xmlns:vm="clr-namespace:MSFSHelper.Core.ViewModels;assembly=MSFSHelper.Core"
+        xmlns:views="clr-namespace:MSFSHelper.Views">
 	<DockPanel>
-        <Menu DockPanel.Dock="Top" 
-			  Foreground="{StaticResource ThemeBackgroundBrush}">
-			<MenuItem Header="_Application">
-				<MenuItem Header="_Quit" Command="{Binding QuitCommand}"/>
-			</MenuItem>
-
-			<MenuItem Header="_SimBrief">
-                <MenuItem Header="_Import Flight Plan" Command="{Binding ImportFlightPlanCommand}"/>
-			</MenuItem>
-
-			<MenuItem Header="_Debug">
-				<MenuItem Header="_Checklist Test" x:Name="ChecklistMenuItem"/>
-			</MenuItem>
-
-			<MenuItem Header="_About">
-				<MenuItem Header="_Project Page" Command="{Binding ProjectPageCommand}"/>
-			</MenuItem>
-
-		</Menu>
+		
+		<views:MenuBar DockPanel.Dock="Top" DataContext="{Binding MenuBar}"/> 
 
 		<Grid DockPanel.Dock="Left"
 		      Width="50"

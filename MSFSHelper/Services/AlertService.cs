@@ -1,7 +1,5 @@
-﻿using Avalonia;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Layout;
-using Consolonia.Controls;
 using MSFSHelper.Core.Services;
 
 namespace MSFSHelper.Services;

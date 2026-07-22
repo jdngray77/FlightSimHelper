@@ -8,11 +8,12 @@ using System.Collections.ObjectModel;
 using System.Timers;
 using MSFSHelper.Core.Services;
 using MSFSHelper.Core.Services.Checklists;
+using MSFSHelper.Core.ViewModels.MenuBar;
 
 namespace MSFSHelper.Core.ViewModels
 {
     [ObservableObject]
-    public partial class MainViewModel : IRecipient<AppStatusMessage>
+    public partial class MainWindowViewModel : IRecipient<AppStatusMessage>
     {
         private readonly INavigationServices navigation;
         private readonly SimBriefService simBrief;
@@ -28,18 +29,19 @@ namespace MSFSHelper.Core.ViewModels
             AutoReset = false
         };
 
-        public MainViewModel(
+        public MainWindowViewModel(
             INavigationServices navigation, 
             SimBriefService simBrief, 
             IMessenger messenger,
             ChecklistLoadService checklistLoadService, 
             FSUIPC.FSUIPC ipc,
-            IAlertService alertService)
+            IAlertService alertService, MenuBarViewModel menuBar)
         {
             this.navigation = navigation;
             this.simBrief = simBrief;
             this.messenger = messenger;
             this.ipc = ipc;
+            this.menuBar = menuBar;
 
             messenger.Register<AppStatusMessage>(this);
             statusMessageClearTimer.Elapsed += Timer_Elapsed;
@@ -86,6 +88,9 @@ namespace MSFSHelper.Core.ViewModels
             )
         ]);
         }
+        
+        [ObservableProperty]
+        private MenuBarViewModel menuBar;
 
         private Task<string> FlightPlanData()
         {

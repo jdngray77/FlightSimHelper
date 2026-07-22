@@ -43,21 +43,25 @@
       <DependentUpon>ChecklistItemControl.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Controls\MenuBar.axaml.cs">
+      <DependentUpon>template.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="data.xml">
+    <None Update="dummySimBriefData.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestView.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Views\template.axaml" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Views\Consolonia\Checklist\" />
   </ItemGroup>
 
 </Project>

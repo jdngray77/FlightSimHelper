@@ -5,7 +5,7 @@ using MSFSHelper.Core.ViewModels;
 
 namespace MSFSHelper.Views.Controls.Checklist
 {
-    public partial class ChecklistView : UserControl, IPostNavigate
+    public partial class ChecklistView : UserControl, INavigateTo, INavigateFrom
     {
         private ChecklistViewModel? vm;
 
@@ -22,7 +22,12 @@ namespace MSFSHelper.Views.Controls.Checklist
                 this.DataContext = vm;
             });
             
-            await vm.StartUpdates();
+            await vm!.StartUpdates();
+        }
+
+        public async Task NavigatedFrom()
+        {
+            await vm!.StopUpdates().ConfigureAwait(false);
         }
     }
 }

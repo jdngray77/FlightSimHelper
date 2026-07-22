@@ -1,7 +1,7 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Interactivity;
-using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using MSFSHelper.Core.ViewModels;
+using MSFSHelper.Core.ViewModels.MenuBar;
 
 namespace MSFSHelper.Views.Pages
 {
@@ -9,18 +9,14 @@ namespace MSFSHelper.Views.Pages
     {
         public MainWindow()
         {   
+            // Main window cannot consume DI, vm is set via consoloniaapp.cs.
             InitializeComponent();
-        }
-
-        protected override void OnLoaded(RoutedEventArgs e)
-        {
-            base.OnLoaded(e);
         }
 
         private void OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
             // Ensure the sender is a ListBox
-            if (sender is ListBox listBox && DataContext is MainViewModel viewModel)
+            if (sender is ListBox listBox && DataContext is MainWindowViewModel viewModel)
             {
                 // Get the selected item
                 var selectedItem = listBox.SelectedItem as MenuItemViewModel;

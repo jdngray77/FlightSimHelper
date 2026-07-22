@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:menuBar="clr-namespace:MSFSHelper.Core.ViewModels.MenuBar;assembly=MSFSHelper.Core"
+        x:Class="MSFSHelper.Views.MenuBar"
+        x:DataType="menuBar:MenuBarViewModel">
+        
+        <Menu 
+                Foreground="{StaticResource ThemeBackgroundBrush}">
+                
+                <MenuItem Header="_Application" 
+                          DataContext="{Binding ApplicationMenuBarMenuViewModel}">
+                        
+                        <MenuItem Header="_Quit" 
+                                  Command="{Binding QuitCommand}"/>
+                        
+                </MenuItem>
+
+                <MenuItem Header="_SimBrief">
+                        
+                        <MenuItem Header="_Import Flight Plan" 
+                                  Command="{Binding ImportFlightPlanCommand}"/>
+                        
+                </MenuItem>
+
+                <MenuItem Header="_Debug"
+                          DataContext="{Binding DebugMenuBarMenuViewModel}">
+                    
+                    <MenuItem Header="_Watch sim variable" 
+                              x:Name="ChecklistMenuItem"
+                              Command="{Binding WatchSimVariableCommand}"/>
+                        
+                </MenuItem>
+
+                <MenuItem Header="_About">
+                        <MenuItem Header="_Project Page" 
+                                  Command="{Binding ProjectPageCommand}"/>
+                </MenuItem>
+
+        </Menu>
+</UserControl>

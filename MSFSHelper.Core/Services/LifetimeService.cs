@@ -4,12 +4,12 @@ using Spectre.Console;
 
 namespace MSFSHelper.Core.Services;
 
-public class StartupService
+public class LifetimeService
 {
     private readonly ChecklistLoadService checklistLoadService;
     private readonly FSUIPC.FSUIPC ipc;
 
-    public StartupService(FSUIPC.FSUIPC ipc, ChecklistLoadService checklistLoadService)
+    public LifetimeService(FSUIPC.FSUIPC ipc, ChecklistLoadService checklistLoadService)
     {
         this.ipc = ipc;
         this.checklistLoadService = checklistLoadService;
@@ -49,5 +49,10 @@ public class StartupService
 
 
         
+    }
+
+    public async Task Shutdown()
+    {
+        Environment.Exit(0);
     }
 }

@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MSFSHelper.Core.Checklists;
 using MSFSHelper.Core.Checklists.ChecklistItems;
 using MSFSHelper.Core.FSUIPC;
 using MSFSHelper.Core.Services;
@@ -13,8 +12,12 @@ namespace MSFSHelper.Core.ViewModels;
 
 public partial class ChecklistViewModel : MenuItemViewModel
 {
-    private readonly global::MSFSHelper.Core.Checklists.Checklist _checklist;
-    private readonly FSUIPC.FSUIPC _ipc;
+    private VariableGroupManager varman;
+    private VariableGroup lvarGroup;
+    private VariableGroup offsetGroup;
+
+    private readonly global::MSFSHelper.Core.Checklists.Checklist checklist;
+    private readonly FSUIPC.FSUIPC ipc;
     private readonly INavigationServices navigationServices;
     private readonly IAlertService alertService;
 
@@ -35,14 +38,17 @@ public partial class ChecklistViewModel : MenuItemViewModel
         FSUIPC.FSUIPC ipc, INavigationServices navigationServices, IAlertService alertService)
         : base(name, ERoutes.Checklist)
     {
-        _checklist = checklist;
-        _ipc = ipc;
+        this.checklist = checklist;
+        this.ipc = ipc;
+        varman = VariableGroupManager.PrimaryManager ?? new VariableGroupManager(this.ipc);
+        
         this.navigationServices = navigationServices;
         this.alertService = alertService;
         Items = new ObservableCollection<ChecklistEntryViewModel>(
             checklist.Items.Select(ChecklistEntryViewModel.Create));
         Items.Add(new InformationalChecklistItemViewModel(new InformationalChecklistItem("---- CHECKLIST COMPLETE ----", "---- CHECKLIST COMPLETE ----")));
         isComplete = checklist.IsComplete;
+
     }
 
     [RelayCommand]
@@ -80,25 +86,32 @@ public partial class ChecklistViewModel : MenuItemViewModel
 
     public async Task StartUpdates()
     {
-        var varman = VariableGroupManager.PrimaryManager ?? new VariableGroupManager(_ipc);
+        lvarGroup   = await varman.DeclareVariableGroup(checklist.Name + "_lvars", checklist.GetLVarNames()).ConfigureAwait(false);
+        offsetGroup = await varman.DeclareOffsetGroup(checklist.Name + "_offsets", checklist.GetOffsets()).ConfigureAwait(false);
 
-        var lvarGroup = await varman.DeclareVariableGroup(_checklist.Name + "_lvars", _checklist.GetLVarNames()).ConfigureAwait(false);
-        var offsetGroup = await varman.DeclareOffsetGroup(_checklist.Name + "_offsets", _checklist.GetOffsets()).ConfigureAwait(false);
-
-        _checklist.Hook(lvarGroup);
-        _checklist.Hook(offsetGroup);
+        checklist.Hook(lvarGroup);
+        checklist.Hook(offsetGroup);
 
         await varman.AutoUpdateVariableGroup(lvarGroup).ConfigureAwait(false);
         await varman.AutoUpdateVariableGroup(offsetGroup).ConfigureAwait(false);
 
-        _checklist.Updated += OnChecklistUpdated;
+        checklist.Updated += OnChecklistUpdated;
         HightlightNextItem();
+    }
+
+    public async Task StopUpdates()
+    {
+        checklist.Updated -= OnChecklistUpdated;
+        checklist.UnhookAll();
+        
+        await varman.DeleteVariableGroup(lvarGroup).ConfigureAwait(false);
+        await varman.DeleteVariableGroup(offsetGroup).ConfigureAwait(false);
     }
 
     private void OnChecklistUpdated(object? sender, ChecklistStateChangedEventArgs e)
     {
         if (e.HasChanged)
-            IsComplete = _checklist.IsComplete;
+            IsComplete = checklist.IsComplete;
 
         Task.Run(async () =>
         {

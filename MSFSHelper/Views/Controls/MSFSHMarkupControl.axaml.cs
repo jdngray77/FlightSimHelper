@@ -5,7 +5,7 @@ using MSFSHelper.Core.ViewModels;
 
 namespace MSFSHelper.Views.Controls
 {
-    public partial class MSFSHMarkupControl : UserControl, IPostNavigate
+    public partial class MSFSHMarkupControl : UserControl, INavigateTo
     {
         MarkupViewViewModel vm;
 
@@ -40,7 +40,7 @@ namespace MSFSHelper.Views.Controls
         private void OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
             // Ensure the sender is a ListBox
-            if (sender is ListBox listBox && DataContext is MainViewModel viewModel)
+            if (sender is ListBox listBox && DataContext is MainWindowViewModel viewModel)
             {
                 // Get the selected item
                 var selectedItem = listBox.SelectedItem as MenuItemViewModel;

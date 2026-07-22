@@ -3,7 +3,7 @@ using MSFSHelper.Core.SimBrief.Models;
 
 namespace MSFSHelper;
 
-public class testmain
+public class simbrieftest
 {
     public static OFP test()
     {

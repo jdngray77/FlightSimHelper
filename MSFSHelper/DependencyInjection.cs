@@ -8,6 +8,7 @@ using MSFSHelper.Core.Services.SimBrief;
 using MSFSHelper.Core.Services.ViewMarkup;
 using MSFSHelper.Core.Services.ViewMarkup.Model;
 using MSFSHelper.Core.ViewModels;
+using MSFSHelper.Core.ViewModels.MenuBar;
 using MSFSHelper.Core.ViewModels.Plan;
 using MSFSHelper.Services;
 using MSFSHelper.Views.Controls;
@@ -39,9 +40,15 @@ namespace MSFSHelper
 
         private void ConfigureViewModels()
         {
-            services.AddSingleton<MainViewModel>();
+            services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<OFPViewModel>();
             services.AddSingleton<MarkupViewViewModel>();
+            services.AddSingleton<MenuBarViewModel>();
+            
+            services.AddSingleton<ApplicationMenuBarMenuViewModel>();
+            services.AddSingleton<SimBriefMenuBarMenuViewModel>();
+            services.AddSingleton<DebugMenuBarMenuViewModel>();
+            services.AddSingleton<AboutMenuBarMenuViewModel>();
         }
 
         private void ConfigureServices()
@@ -52,7 +59,7 @@ namespace MSFSHelper
             services.AddSingleton<MarkupRenderer>();
             services.AddSingleton<ChecklistLoadService>();
             services.AddSingleton<FSUIPC>();
-            services.AddSingleton<StartupService>();
+            services.AddSingleton<LifetimeService>();
             services.AddSingleton<IAlertService, AlertService>();
         }
 
