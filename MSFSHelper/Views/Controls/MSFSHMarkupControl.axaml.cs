@@ -1,16 +1,15 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
 using MSFSHelper.Core.Services.Navigation;
-using MSFSHelper.Core.Services.ViewMarkup;
 using MSFSHelper.Core.ViewModels;
 
-namespace MSFSHelper.Views.Consolonia
+namespace MSFSHelper.Views.Controls
 {
-    public partial class MarkupView : UserControl, IPostNavigate
+    public partial class MSFSHMarkupControl : UserControl, IPostNavigate
     {
         MarkupViewViewModel vm;
 
-        public MarkupView(MarkupViewViewModel vm)
+        public MSFSHMarkupControl(MarkupViewViewModel vm)
         {
             DataContext = vm;
             this.vm = vm;

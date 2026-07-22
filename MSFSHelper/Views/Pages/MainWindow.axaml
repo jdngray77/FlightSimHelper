@@ -2,15 +2,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:consolonia="clr-namespace:Consolonia.Controls;assembly=Consolonia.Core"
-		xmlns:helpers="clr-namespace:Consolonia.Themes.Templates.Controls.Helpers;assembly=Consolonia.Themes"
         mc:Ignorable="d"
         Title=" Flight Crew Information Terminal"
-        x:Class="MSFSHelper.Views.Consolonia.MainWindow"
+        x:Class="MSFSHelper.Views.Pages.MainWindow"
 		x:Name="Window"
-        xmlns:dialog="clr-namespace:ToolUi.Runner.Dialog"
-        xmlns:vm="clr-namespace:MSFSHelper.Core.ViewModels;assembly=MSFSHelper.Core"
-        xmlns:forms="clr-namespace:ToolUi.Runner.Forms">
+        xmlns:vm="clr-namespace:MSFSHelper.Core.ViewModels;assembly=MSFSHelper.Core">
 	<DockPanel>
         <Menu DockPanel.Dock="Top" 
 			  Foreground="{StaticResource ThemeBackgroundBrush}">

@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Threading;
 using MSFSHelper.Core.Services.Navigation;
-using MSFSHelper.Views.Consolonia;
+using MainWindow = MSFSHelper.Views.Pages.MainWindow;
 
 namespace MSFSHelper
 {

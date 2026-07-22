@@ -1,6 +1,6 @@
 ﻿using Avalonia.Controls;
 
-namespace MSFSHelper.Views.Consolonia
+namespace MSFSHelper.Views.Controls.Checklist
 {
     public partial class ChecklistItemControl : UserControl
     {

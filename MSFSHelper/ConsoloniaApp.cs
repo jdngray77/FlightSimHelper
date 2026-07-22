@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MSFSHelper.Core.FSUIPC;
 using MSFSHelper.Core.Services;
 using MSFSHelper.Core.ViewModels;
-using MSFSHelper.Views.Consolonia;
+using MainWindow = MSFSHelper.Views.Pages.MainWindow;
 
 namespace MSFSHelper
 {

@@ -3,7 +3,7 @@ using Avalonia.Threading;
 using MSFSHelper.Core.Services.Navigation;
 using MSFSHelper.Core.ViewModels;
 
-namespace MSFSHelper.Views.Consolonia
+namespace MSFSHelper.Views.Controls.Checklist
 {
     public partial class ChecklistView : UserControl, IPostNavigate
     {

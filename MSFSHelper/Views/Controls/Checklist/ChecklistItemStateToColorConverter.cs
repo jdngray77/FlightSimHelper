@@ -2,12 +2,10 @@
 using Avalonia.Data.Converters;
 using Avalonia.Media;
 using MSFSHelper.Core.Checklists.ChecklistItems;
-using Terminal.Gui;
-using Color = Spectre.Console.Color;
 
-namespace MSFSHelper.Converters;
+namespace MSFSHelper.Views.Controls.Checklist;
 
-public class StateToColorConverter : IValueConverter
+public class ChecklistItemStateToColorConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {

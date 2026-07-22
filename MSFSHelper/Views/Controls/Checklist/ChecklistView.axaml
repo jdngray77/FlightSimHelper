@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:consolonia="clr-namespace:MSFSHelper.Views.Consolonia"
+        xmlns:checklist="clr-namespace:MSFSHelper.Views.Controls.Checklist"
         mc:Ignorable="d"
-        x:Class="MSFSHelper.Views.Consolonia.ChecklistView">
+        x:Class="MSFSHelper.Views.Controls.Checklist.ChecklistView">
 		<Grid RowDefinitions="*,Auto">
 			<ListBox 
 				ItemsSource="{Binding Items}" 
@@ -14,7 +14,7 @@
 				SelectionMode="Single">
 				<ListBox.ItemTemplate>
 					<DataTemplate>
-						<consolonia:ChecklistItemControl DataContext="{Binding}"/>
+						<checklist:ChecklistItemControl DataContext="{Binding}"/>
 					</DataTemplate>
 				</ListBox.ItemTemplate>
 			</ListBox>

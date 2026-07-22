@@ -4,13 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:checklistVMs="clr-namespace:MSFSHelper.Core.ViewModels.Checklist;assembly=MSFSHelper.Core"
-        xmlns:converters="clr-namespace:MSFSHelper.Converters"
+        xmlns:checklist="clr-namespace:MSFSHelper.Views.Controls.Checklist"
         mc:Ignorable="d"
-        x:Class="MSFSHelper.Views.Consolonia.ChecklistItemControl"
+        x:Class="MSFSHelper.Views.Controls.Checklist.ChecklistItemControl"
 		x:DataType="checklistVMs:ChecklistEntryViewModel">
 	<UserControl.Resources>
-		<converters:StateToColorConverter x:Key="StateToColorConverter"/>
-		<converters:SelectedChecklistItemTextConverter x:Key="SelectedChecklistItemTextConverter"/>
+		<checklist:ChecklistItemStateToColorConverter x:Key="StateToColorConverter"/>
+		<checklist:ChecklistItemSelectedTextConverter x:Key="SelectedChecklistItemTextConverter"/>
 	</UserControl.Resources>
 
 		<Grid ColumnDefinitions="*,*,*" MinWidth="150" HorizontalAlignment="Stretch">

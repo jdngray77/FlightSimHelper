@@ -1,9 +1,12 @@
-﻿using Avalonia.Data.Converters;
-using System.Globalization;
+﻿using System.Globalization;
+using Avalonia.Data.Converters;
 
-namespace MSFSHelper.Converters
+namespace MSFSHelper.Views.Controls.Checklist
 {
-    public class SelectedChecklistItemTextConverter : IMultiValueConverter
+    /// <summary>
+    /// Adds formatting to a checklist item when it is selected.
+    /// </summary>
+    public class ChecklistItemSelectedTextConverter : IMultiValueConverter
     {
         public object Convert(
             IList<object> values,

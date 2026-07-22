@@ -27,15 +27,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\Consolonia\MarkupView.axaml.cs">
-      <DependentUpon>MarkupView.axaml</DependentUpon>
+    <Compile Update="Views\Pages\MainWindow.axaml.cs">
+      <DependentUpon>MainWindow.axaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\Consolonia\Checklist\ChecklistView.axaml.cs">
+    <Compile Update="Views\Controls\MSFSHMarkupControl.axaml.cs">
+      <DependentUpon>MarkupView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Controls\Checklist\ChecklistView.axaml.cs">
       <DependentUpon>ChecklistView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\Consolonia\Checklist\ChecklistItemControl.axaml.cs">
-      <DependentUpon>ChecklistItemView.axaml</DependentUpon>
+    <Compile Update="Views\Controls\Checklist\ChecklistItemControl.axaml.cs">
+      <DependentUpon>ChecklistItemControl.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -47,6 +52,12 @@
     <None Update="TestView.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Converters\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Views\Consolonia\Checklist\" />
   </ItemGroup>
 
 </Project>

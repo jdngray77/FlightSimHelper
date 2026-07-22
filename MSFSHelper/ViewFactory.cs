@@ -1,9 +1,8 @@
-﻿using Avalonia;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using MSFSHelper.Core.Services.Navigation;
-using MSFSHelper.Core.Services.ViewMarkup.Model;
-using MSFSHelper.Views.Consolonia;
+using ChecklistView = MSFSHelper.Views.Controls.Checklist.ChecklistView;
+using MSFSHMarkupControl = MSFSHelper.Views.Controls.MSFSHMarkupControl;
 
 namespace MSFSHelper
 {
@@ -17,7 +16,7 @@ namespace MSFSHelper
         {
             Views = new Dictionary<ERoutes, Lazy<Control>>
             {
-                { ERoutes.MarkupView, new Lazy<Control>(LoadView<Views.Consolonia.MarkupView>) },
+                { ERoutes.MarkupView, new Lazy<Control>(LoadView<MSFSHMarkupControl>) },
                 { ERoutes.Checklist, new Lazy<Control>(LoadView<ChecklistView>) },
             };
         }

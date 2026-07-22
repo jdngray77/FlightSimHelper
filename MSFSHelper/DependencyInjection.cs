@@ -10,6 +10,8 @@ using MSFSHelper.Core.Services.ViewMarkup.Model;
 using MSFSHelper.Core.ViewModels;
 using MSFSHelper.Core.ViewModels.Plan;
 using MSFSHelper.Services;
+using MSFSHelper.Views.Controls;
+using MSFSHelper.Views.Controls.Checklist;
 
 namespace MSFSHelper
 {
@@ -31,8 +33,8 @@ namespace MSFSHelper
 
         private void ConfigureViews()
         {
-            services.AddSingleton<Views.Consolonia.MarkupView>();
-            services.AddTransient<Views.Consolonia.ChecklistView>();
+            services.AddSingleton<MSFSHMarkupControl>();
+            services.AddTransient<ChecklistView>();
         }
 
         private void ConfigureViewModels()
